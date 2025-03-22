@@ -6,7 +6,7 @@ const HeroSection = () => {
   const sourcesRef = useRef<HTMLDivElement>(null);
   const userCounterRef = useRef<HTMLDivElement>(null);
   
-  // Sources marquee data for multiple rows
+  // Sources marquee data for multiple rows with different starting points
   const sources = [
     { id: 1, name: 'GST' },
     { id: 2, name: 'UDYAM' },
@@ -25,7 +25,7 @@ const HeroSection = () => {
   ];
 
   useEffect(() => {
-    // Subtle floating animation for trusted users badge only
+    // Floating animation for trusted users badge
     if (userCounterRef.current) {
       const floatAnimation = () => {
         const badge = userCounterRef.current;
@@ -37,13 +37,17 @@ const HeroSection = () => {
         }
       };
       
+      // Start the animation immediately
+      floatAnimation();
+      
+      // Then set interval for continuous animation
       const interval = setInterval(floatAnimation, 3000);
       return () => clearInterval(interval);
     }
   }, []);
 
   return (
-    <section className="relative min-h-screen pt-32 pb-32 overflow-hidden">
+    <section className="pt-20 pb-16 relative overflow-hidden min-h-[90vh] flex items-center">
       <div className="absolute inset-0 floating-dots"></div>
       
       {/* Background gradient */}
@@ -98,29 +102,29 @@ const HeroSection = () => {
                 <div className="h-[600px] w-[300px] overflow-hidden relative">
                   {/* Phone screen with app UI */}
                   <div className="absolute inset-0 bg-black flex flex-col">
-                    <div className="p-6 text-white text-center">
+                    <div className="p-6 pt-10 text-white text-center">
                       <div className="text-sm text-white/60">Saakh</div>
                     </div>
                     
-                    <div className="flex-1 flex flex-col items-center justify-between px-6 py-4">
+                    <div className="flex-1 flex flex-col items-center justify-between px-6 py-2">
                       <div className="text-center">
                         <h3 className="text-white text-xl font-bold mb-4 px-2">
                           Get 350+ data points on any business instantly from every possible source
                         </h3>
                         
                         {/* Source logos triple marquee */}
-                        <div className="space-y-4 mt-6 mb-8">
+                        <div className="space-y-3 mt-4 mb-6">
                           {/* Row 1 - starts at beginning */}
                           <div className="marquee-container">
                             <div className="marquee-content">
-                              {sources.map(source => (
+                              {[...sources, ...sources, ...sources].map(source => (
                                 <div key={source.id} className="source-item">
                                   {source.name}
                                 </div>
                               ))}
                             </div>
                             <div className="marquee-content">
-                              {sources.map(source => (
+                              {[...sources, ...sources, ...sources].map(source => (
                                 <div key={`dup-${source.id}`} className="source-item">
                                   {source.name}
                                 </div>
@@ -131,14 +135,14 @@ const HeroSection = () => {
                           {/* Row 2 - starts in middle */}
                           <div className="marquee-container">
                             <div className="marquee-content" style={{ animationDelay: '-15s' }}>
-                              {sources.map(source => (
+                              {[...sources, ...sources, ...sources].map(source => (
                                 <div key={`r2-${source.id}`} className="source-item">
                                   {source.name}
                                 </div>
                               ))}
                             </div>
                             <div className="marquee-content" style={{ animationDelay: '-15s' }}>
-                              {sources.map(source => (
+                              {[...sources, ...sources, ...sources].map(source => (
                                 <div key={`r2-dup-${source.id}`} className="source-item">
                                   {source.name}
                                 </div>
@@ -149,14 +153,14 @@ const HeroSection = () => {
                           {/* Row 3 - starts near end */}
                           <div className="marquee-container">
                             <div className="marquee-content" style={{ animationDelay: '-22s' }}>
-                              {sources.map(source => (
+                              {[...sources, ...sources, ...sources].map(source => (
                                 <div key={`r3-${source.id}`} className="source-item">
                                   {source.name}
                                 </div>
                               ))}
                             </div>
                             <div className="marquee-content" style={{ animationDelay: '-22s' }}>
-                              {sources.map(source => (
+                              {[...sources, ...sources, ...sources].map(source => (
                                 <div key={`r3-dup-${source.id}`} className="source-item">
                                   {source.name}
                                 </div>
@@ -166,8 +170,8 @@ const HeroSection = () => {
                         </div>
                       </div>
                       
-                      <div className="w-full mb-6">
-                        <h3 className="text-white text-xl font-medium mb-4">
+                      <div className="w-full mb-4">
+                        <h3 className="text-white text-xl font-medium mb-3">
                           What's your name?
                         </h3>
                         
@@ -199,6 +203,7 @@ const HeroSection = () => {
               <div 
                 ref={userCounterRef}
                 className="absolute -bottom-4 -left-4 px-4 py-3 bg-black/80 backdrop-blur-lg rounded-lg border border-white/10 flex items-center space-x-3 animate-fade-in shadow-neon-blue transition-transform duration-1000 ease-in-out"
+                style={{ animation: 'float 3s ease-in-out infinite' }}
               >
                 <div className="flex -space-x-2">
                   <div className="w-8 h-8 rounded-full bg-saakh-blue/30 border-2 border-saakh-blue flex items-center justify-center text-white font-bold text-xs">
