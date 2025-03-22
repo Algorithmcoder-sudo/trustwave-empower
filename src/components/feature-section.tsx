@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 
 const FeatureSection = () => {
@@ -12,6 +11,7 @@ const FeatureSection = () => {
     {
       id: 1,
       title: "Financial Dashboard",
+      label: "DASHBOARD",
       description: "Access all your financial data at a glance, streamlining your management process.",
       items: [
         "Real-time balance updates",
@@ -22,6 +22,7 @@ const FeatureSection = () => {
     {
       id: 2,
       title: "Financial Insights",
+      label: "FINANCIAL OVERVIEW",
       description: "Gain comprehensive insights into your spending patterns and financial behaviors.",
       items: [
         "Spending analytics",
@@ -32,6 +33,7 @@ const FeatureSection = () => {
     {
       id: 3,
       title: "Business Analytics",
+      label: "BUSINESS REPORTS",
       description: "Make data-driven decisions with powerful business performance metrics.",
       items: [
         "Revenue tracking",
@@ -43,56 +45,64 @@ const FeatureSection = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (!sectionRef.current || !mobileRef.current) return;
+      if (!sectionRef.current) return;
       
       const section = sectionRef.current;
-      const sectionTop = section.getBoundingClientRect().top;
+      const sectionRect = section.getBoundingClientRect();
+      const sectionTop = sectionRect.top;
       const sectionHeight = section.offsetHeight;
       const windowHeight = window.innerHeight;
       
-      // Calculate section visibility (0 to 1, where 0 is not visible, 1 is fully visible)
-      let sectionVisibility = 1 - (sectionTop / windowHeight);
-      sectionVisibility = Math.max(0, Math.min(1, sectionVisibility));
+      // We'll divide our section into 3 phases (one per screen height)
+      const totalScrollableHeight = sectionHeight - windowHeight;
+      const scrollPosition = Math.max(0, -sectionTop);
+      const scrollRatio = Math.min(1, scrollPosition / totalScrollableHeight);
       
-      // For the first phase - Mobile with floating labels
-      if (sectionVisibility < 0.3) {
+      // Each phase takes 1/3 of the total scrollable height
+      const phaseScrollRatio = scrollRatio * 3;
+      
+      // Determine which phase we're in
+      if (phaseScrollRatio < 1) {
+        // Phase 1: Mobile with floating labels
         setScrollPhase(0);
-        setScrollProgress(sectionVisibility / 0.3);
-      } 
-      // For the second phase - First feature card
-      else if (sectionVisibility < 0.6) {
+        setScrollProgress(phaseScrollRatio);
+      } else if (phaseScrollRatio < 2) {
+        // Phase 2: First feature card
         setScrollPhase(1);
-        setScrollProgress((sectionVisibility - 0.3) / 0.3);
-      } 
-      // For the third phase - Second feature card
-      else if (sectionVisibility < 0.9) {
+        setScrollProgress(phaseScrollRatio - 1);
+      } else if (phaseScrollRatio < 3) {
+        // Phase 3: Second feature card
         setScrollPhase(2);
-        setScrollProgress((sectionVisibility - 0.6) / 0.3);
-      }
-      // For the fourth phase - Third feature card
-      else {
+        setScrollProgress(phaseScrollRatio - 2);
+      } else {
+        // Phase 4: Third feature card (if we scroll that far)
         setScrollPhase(3);
-        setScrollProgress((sectionVisibility - 0.9) / 0.1);
+        setScrollProgress(Math.min(1, phaseScrollRatio - 3));
       }
       
-      // Update mobile screen content scroll position
+      // Update mobile screen scroll based on overall progress
       if (mobileScreenRef.current) {
-        const maxScroll = 800; // Maximum scroll distance in pixels
-        mobileScreenRef.current.style.transform = `translateY(-${sectionVisibility * maxScroll}px)`;
+        const maxScroll = 1200; // Adjust this based on the actual height of your screenshot
+        const scrollY = scrollRatio * maxScroll;
+        mobileScreenRef.current.style.transform = `translateY(-${scrollY}px)`;
       }
     };
     
     window.addEventListener('scroll', handleScroll);
+    // Initial call to set up correct state
+    handleScroll();
+    
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
     <section 
       ref={sectionRef} 
-      className="min-h-[300vh] relative overflow-hidden"
+      className="min-h-[300vh] relative overflow-hidden bg-black"
     >
-      <div className="absolute inset-0 floating-dots"></div>
+      <div className="absolute inset-0 floating-dots bg-black bg-opacity-90"></div>
       
+      {/* Make this sticky to keep it in view as we scroll through the phases */}
       <div className="sticky top-0 min-h-screen py-20 flex items-center">
         <div className="container mx-auto px-6 relative z-10">
           <div className="flex flex-col items-center mb-16">
@@ -110,6 +120,9 @@ const FeatureSection = () => {
               <div 
                 ref={mobileRef}
                 className="relative rounded-[40px] overflow-hidden border-[8px] border-gray-800 bg-black shadow-2xl transition-all duration-500 opacity-100"
+                style={{
+                  transform: `scale(${1 - scrollProgress * 0.05})`, // Subtle scale effect
+                }}
               >
                 <div className="absolute top-0 w-full h-6 bg-black z-20 flex justify-center items-center">
                   <div className="w-20 h-4 bg-black rounded-b-lg"></div>
@@ -119,12 +132,11 @@ const FeatureSection = () => {
                   {/* Scrollable content in the phone */}
                   <div ref={mobileScreenRef} className="transition-transform duration-700 ease-out">
                     <div className="bg-black text-white">
-                      {/* App screenshot - fit to mobile width */}
+                      {/* App screenshot */}
                       <img 
                         src="/screenshot-dashboard.png" 
                         alt="App Dashboard" 
                         className="w-full object-cover"
-                        style={{ maxHeight: '1400px' }}
                       />
                     </div>
                   </div>
@@ -133,14 +145,15 @@ const FeatureSection = () => {
               
               {/* Floating labels around the phone - only visible in first phase */}
               <div className={`absolute z-10 transition-opacity duration-500 ${scrollPhase === 0 ? 'opacity-100' : 'opacity-0'}`}>
+                {/* Salary Label */}
                 <div 
-                  className={`absolute transition-all duration-500 delay-300 transform ${
-                    scrollPhase === 0 && scrollProgress > 0.4 ? 'opacity-100' : 'opacity-0'
+                  className={`absolute transition-all duration-500 delay-300 ${
+                    scrollPhase === 0 && scrollProgress > 0.2 ? 'opacity-100' : 'opacity-0'
                   }`} 
                   style={{ 
                     left: '-270px', 
                     top: '100px',
-                    transform: `translateX(${scrollPhase === 0 && scrollProgress > 0.4 ? '0' : '-30px'})`
+                    transform: `translateX(${scrollPhase === 0 && scrollProgress > 0.2 ? '0' : '-30px'})`
                   }}
                 >
                   <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-lg p-4 shadow-neon-blue w-64">
@@ -148,14 +161,15 @@ const FeatureSection = () => {
                   </div>
                 </div>
                 
+                {/* Coffee Label */}
                 <div 
-                  className={`absolute transition-all duration-500 delay-500 transform ${
-                    scrollPhase === 0 && scrollProgress > 0.5 ? 'opacity-100' : 'opacity-0'
+                  className={`absolute transition-all duration-500 delay-500 ${
+                    scrollPhase === 0 && scrollProgress > 0.4 ? 'opacity-100' : 'opacity-0'
                   }`}
                   style={{ 
                     right: '-220px', 
                     top: '80px',
-                    transform: `translateX(${scrollPhase === 0 && scrollProgress > 0.5 ? '0' : '30px'})`
+                    transform: `translateX(${scrollPhase === 0 && scrollProgress > 0.4 ? '0' : '30px'})`
                   }}
                 >
                   <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-lg p-4 shadow-neon-blue w-64">
@@ -163,8 +177,9 @@ const FeatureSection = () => {
                   </div>
                 </div>
                 
+                {/* Holidays Label */}
                 <div 
-                  className={`absolute transition-all duration-500 delay-700 transform ${
+                  className={`absolute transition-all duration-500 delay-700 ${
                     scrollPhase === 0 && scrollProgress > 0.6 ? 'opacity-100' : 'opacity-0'
                   }`}
                   style={{ 
@@ -178,14 +193,15 @@ const FeatureSection = () => {
                   </div>
                 </div>
                 
+                {/* Dividend Label */}
                 <div 
-                  className={`absolute transition-all duration-500 delay-900 transform ${
-                    scrollPhase === 0 && scrollProgress > 0.7 ? 'opacity-100' : 'opacity-0'
+                  className={`absolute transition-all duration-500 delay-900 ${
+                    scrollPhase === 0 && scrollProgress > 0.8 ? 'opacity-100' : 'opacity-0'
                   }`}
                   style={{ 
                     right: '-220px', 
                     top: '230px',
-                    transform: `translateX(${scrollPhase === 0 && scrollProgress > 0.7 ? '0' : '30px'})`
+                    transform: `translateX(${scrollPhase === 0 && scrollProgress > 0.8 ? '0' : '30px'})`
                   }}
                 >
                   <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-lg p-4 shadow-neon-blue w-64">
@@ -195,28 +211,29 @@ const FeatureSection = () => {
               </div>
             </div>
             
-            {/* Feature cards with scroll reveal effect - appear one by one from bottom */}
-            <div className="w-full lg:w-2/3 relative">
-              {/* Card 1 - phase 1 */}
+            {/* Feature cards container */}
+            <div className="lg:w-2/3 relative h-screen">
+              {/* Card 1 */}
               <div 
-                className={`feature-card absolute left-0 w-full transition-all duration-1000 transform ${
-                  scrollPhase >= 1 
-                    ? 'opacity-100 translate-y-0' 
-                    : 'opacity-0 translate-y-[50vh]'
+                className={`feature-card absolute w-full p-8 lg:p-10 bg-black/30 backdrop-blur-md border border-white/5 rounded-xl shadow-lg transition-all duration-1000 transform ${
+                  scrollPhase >= 1 ? 'opacity-100' : 'opacity-0'
                 }`}
                 style={{
-                  opacity: scrollPhase === 1 ? scrollProgress : (scrollPhase > 1 ? (1 - Math.min(1, scrollProgress * 2)) : 0),
+                  right: '0',
+                  opacity: scrollPhase === 1 
+                    ? scrollProgress 
+                    : (scrollPhase > 1 ? (1 - Math.min(1, scrollProgress * 2)) : 0),
                   transform: `translateY(${
                     scrollPhase === 0 
-                      ? '50vh' 
+                      ? '100vh' 
                       : (scrollPhase === 1 
-                        ? `${(1 - scrollProgress) * 50}vh` 
-                        : `${-(scrollProgress) * 50}vh`)
+                        ? `${(1 - scrollProgress) * 100}vh` 
+                        : `${-(scrollProgress) * 100}vh`)
                   })`,
                   pointerEvents: scrollPhase === 1 ? 'auto' : 'none'
                 }}
               >
-                <div className="text-saakh-blue/80 text-sm mb-1">DASHBOARD</div>
+                <div className="text-saakh-blue/80 text-sm mb-1">{featureCards[0].label}</div>
                 <h3 className="text-white text-2xl font-bold mb-3">{featureCards[0].title}</h3>
                 <p className="text-white/70 mb-4">{featureCards[0].description}</p>
                 <ul className="space-y-2">
@@ -231,26 +248,27 @@ const FeatureSection = () => {
                 </ul>
               </div>
               
-              {/* Card 2 - phase 2 */}
+              {/* Card 2 */}
               <div 
-                className={`feature-card absolute left-0 w-full transition-all duration-1000 transform ${
-                  scrollPhase >= 2 
-                    ? 'opacity-100 translate-y-0' 
-                    : 'opacity-0 translate-y-[50vh]'
+                className={`feature-card absolute w-full p-8 lg:p-10 bg-black/30 backdrop-blur-md border border-white/5 rounded-xl shadow-lg transition-all duration-1000 transform ${
+                  scrollPhase >= 2 ? 'opacity-100' : 'opacity-0'
                 }`}
                 style={{
-                  opacity: scrollPhase === 2 ? scrollProgress : (scrollPhase > 2 ? (1 - Math.min(1, scrollProgress * 2)) : 0),
+                  right: '0',
+                  opacity: scrollPhase === 2 
+                    ? scrollProgress 
+                    : (scrollPhase > 2 ? (1 - Math.min(1, scrollProgress * 2)) : 0),
                   transform: `translateY(${
                     scrollPhase < 2 
-                      ? '50vh' 
+                      ? '100vh' 
                       : (scrollPhase === 2 
-                        ? `${(1 - scrollProgress) * 50}vh` 
-                        : `${-(scrollProgress) * 50}vh`)
+                        ? `${(1 - scrollProgress) * 100}vh` 
+                        : `${-(scrollProgress) * 100}vh`)
                   })`,
                   pointerEvents: scrollPhase === 2 ? 'auto' : 'none'
                 }}
               >
-                <div className="text-saakh-blue/80 text-sm mb-1">FINANCIAL OVERVIEW</div>
+                <div className="text-saakh-blue/80 text-sm mb-1">{featureCards[1].label}</div>
                 <h3 className="text-white text-2xl font-bold mb-3">{featureCards[1].title}</h3>
                 <p className="text-white/70 mb-4">{featureCards[1].description}</p>
                 <ul className="space-y-2">
@@ -265,24 +283,23 @@ const FeatureSection = () => {
                 </ul>
               </div>
               
-              {/* Card 3 - phase 3 */}
+              {/* Card 3 */}
               <div 
-                className={`feature-card absolute left-0 w-full transition-all duration-1000 transform ${
-                  scrollPhase >= 3 
-                    ? 'opacity-100 translate-y-0' 
-                    : 'opacity-0 translate-y-[50vh]'
+                className={`feature-card absolute w-full p-8 lg:p-10 bg-black/30 backdrop-blur-md border border-white/5 rounded-xl shadow-lg transition-all duration-1000 transform ${
+                  scrollPhase >= 3 ? 'opacity-100' : 'opacity-0'
                 }`}
                 style={{
+                  right: '0',
                   opacity: scrollPhase === 3 ? scrollProgress : 0,
                   transform: `translateY(${
                     scrollPhase < 3 
-                      ? '50vh' 
-                      : `${(1 - scrollProgress) * 50}vh`
+                      ? '100vh' 
+                      : `${(1 - scrollProgress) * 100}vh`
                   })`,
                   pointerEvents: scrollPhase === 3 ? 'auto' : 'none'
                 }}
               >
-                <div className="text-saakh-blue/80 text-sm mb-1">BUSINESS REPORTS</div>
+                <div className="text-saakh-blue/80 text-sm mb-1">{featureCards[2].label}</div>
                 <h3 className="text-white text-2xl font-bold mb-3">{featureCards[2].title}</h3>
                 <p className="text-white/70 mb-4">{featureCards[2].description}</p>
                 <ul className="space-y-2">
