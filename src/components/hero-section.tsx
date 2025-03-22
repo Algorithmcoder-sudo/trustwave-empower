@@ -6,7 +6,7 @@ const HeroSection = () => {
   const sourcesRef = useRef<HTMLDivElement>(null);
   const userCounterRef = useRef<HTMLDivElement>(null);
   
-  // Sources marquee data
+  // Sources marquee data for multiple rows
   const sources = [
     { id: 1, name: 'GST' },
     { id: 2, name: 'UDYAM' },
@@ -25,14 +25,14 @@ const HeroSection = () => {
   ];
 
   useEffect(() => {
-    // Subtle floating animation for phone
-    if (phoneRef.current) {
+    // Subtle floating animation for trusted users badge only
+    if (userCounterRef.current) {
       const floatAnimation = () => {
-        const phone = phoneRef.current;
-        if (phone) {
-          phone.style.transform = 'translateY(-8px)';
+        const badge = userCounterRef.current;
+        if (badge) {
+          badge.style.transform = 'translateY(-8px)';
           setTimeout(() => {
-            if (phone) phone.style.transform = 'translateY(0)';
+            if (badge) badge.style.transform = 'translateY(0)';
           }, 1500);
         }
       };
@@ -43,7 +43,7 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="relative min-h-screen pt-32 pb-16 overflow-hidden">
+    <section className="relative min-h-screen pt-32 pb-32 overflow-hidden">
       <div className="absolute inset-0 floating-dots"></div>
       
       {/* Background gradient */}
@@ -88,7 +88,7 @@ const HeroSection = () => {
           <div className="w-full lg:w-1/2 flex justify-center items-center relative">
             <div 
               ref={phoneRef}
-              className="relative z-10 transition-transform duration-1000 ease-in-out"
+              className="relative z-10"
             >
               <div className="relative rounded-[40px] overflow-hidden border-[8px] border-gray-800 bg-black shadow-2xl">
                 <div className="absolute top-0 w-full h-6 bg-black z-10 flex justify-center items-center">
@@ -98,37 +98,76 @@ const HeroSection = () => {
                 <div className="h-[600px] w-[300px] overflow-hidden relative">
                   {/* Phone screen with app UI */}
                   <div className="absolute inset-0 bg-black flex flex-col">
-                    <div className="p-4 text-white text-center">
-                      <div className="text-sm text-white/60 mb-1">Saakh</div>
+                    <div className="p-6 text-white text-center">
+                      <div className="text-sm text-white/60">Saakh</div>
                     </div>
                     
-                    <div className="flex-1 flex flex-col items-center justify-between px-6 py-8">
+                    <div className="flex-1 flex flex-col items-center justify-between px-6 py-4">
                       <div className="text-center">
-                        <h3 className="text-white text-2xl font-bold mb-4">
+                        <h3 className="text-white text-xl font-bold mb-4 px-2">
                           Get 350+ data points on any business instantly from every possible source
                         </h3>
                         
-                        {/* Source logos marquee */}
-                        <div ref={sourcesRef} className="marquee-container mt-6 mb-8">
-                          <div className="marquee-content">
-                            {sources.map(source => (
-                              <div key={source.id} className="source-item">
-                                {source.name}
-                              </div>
-                            ))}
+                        {/* Source logos triple marquee */}
+                        <div className="space-y-4 mt-6 mb-8">
+                          {/* Row 1 - starts at beginning */}
+                          <div className="marquee-container">
+                            <div className="marquee-content">
+                              {sources.map(source => (
+                                <div key={source.id} className="source-item">
+                                  {source.name}
+                                </div>
+                              ))}
+                            </div>
+                            <div className="marquee-content">
+                              {sources.map(source => (
+                                <div key={`dup-${source.id}`} className="source-item">
+                                  {source.name}
+                                </div>
+                              ))}
+                            </div>
                           </div>
-                          <div className="marquee-content">
-                            {sources.map(source => (
-                              <div key={`dup-${source.id}`} className="source-item">
-                                {source.name}
-                              </div>
-                            ))}
+                          
+                          {/* Row 2 - starts in middle */}
+                          <div className="marquee-container">
+                            <div className="marquee-content" style={{ animationDelay: '-15s' }}>
+                              {sources.map(source => (
+                                <div key={`r2-${source.id}`} className="source-item">
+                                  {source.name}
+                                </div>
+                              ))}
+                            </div>
+                            <div className="marquee-content" style={{ animationDelay: '-15s' }}>
+                              {sources.map(source => (
+                                <div key={`r2-dup-${source.id}`} className="source-item">
+                                  {source.name}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                          
+                          {/* Row 3 - starts near end */}
+                          <div className="marquee-container">
+                            <div className="marquee-content" style={{ animationDelay: '-22s' }}>
+                              {sources.map(source => (
+                                <div key={`r3-${source.id}`} className="source-item">
+                                  {source.name}
+                                </div>
+                              ))}
+                            </div>
+                            <div className="marquee-content" style={{ animationDelay: '-22s' }}>
+                              {sources.map(source => (
+                                <div key={`r3-dup-${source.id}`} className="source-item">
+                                  {source.name}
+                                </div>
+                              ))}
+                            </div>
                           </div>
                         </div>
                       </div>
                       
-                      <div className="w-full">
-                        <h3 className="text-white text-2xl font-medium mb-4">
+                      <div className="w-full mb-6">
+                        <h3 className="text-white text-xl font-medium mb-4">
                           What's your name?
                         </h3>
                         
@@ -156,10 +195,10 @@ const HeroSection = () => {
                 </div>
               </div>
               
-              {/* Trusted users badge */}
+              {/* Trusted users badge - floating */}
               <div 
                 ref={userCounterRef}
-                className="absolute -bottom-4 -left-4 px-4 py-3 bg-black/80 backdrop-blur-lg rounded-lg border border-white/10 flex items-center space-x-3 animate-fade-in shadow-neon-blue"
+                className="absolute -bottom-4 -left-4 px-4 py-3 bg-black/80 backdrop-blur-lg rounded-lg border border-white/10 flex items-center space-x-3 animate-fade-in shadow-neon-blue transition-transform duration-1000 ease-in-out"
               >
                 <div className="flex -space-x-2">
                   <div className="w-8 h-8 rounded-full bg-saakh-blue/30 border-2 border-saakh-blue flex items-center justify-center text-white font-bold text-xs">

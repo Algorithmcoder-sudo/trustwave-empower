@@ -149,10 +149,13 @@
   animation: marquee-reverse 30s linear infinite;
 }
 
+/* Remove the pause on hover for marquee */
+/* Removed:
 .marquee-container:hover .marquee-content,
 .marquee-container:hover .marquee-content-reverse {
   animation-play-state: paused;
 }
+*/
 
 @keyframes marquee {
   0% { transform: translateX(0); }

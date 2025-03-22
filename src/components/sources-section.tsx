@@ -2,7 +2,7 @@
 import React from 'react';
 
 const SourcesSection = () => {
-  // Define the sources data
+  // Define the sources data - organized in three rows
   const sourceGroups = [
     [
       "GST", "UDYAM", "PAN", "TAN", "IEC", "EPF", 
