@@ -4,6 +4,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 
 const FeatureSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const mobileDeviceRef = useRef<HTMLDivElement>(null);
   const mobileScreenRef = useRef<HTMLDivElement>(null);
   const [scrollPhase, setScrollPhase] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -139,173 +140,174 @@ const FeatureSection = () => {
   return (
     <section 
       ref={sectionRef} 
-      className="min-h-[400vh] relative overflow-hidden bg-black"
+      className="min-h-[300vh] relative overflow-hidden bg-black"
     >
       <div className="absolute inset-0 floating-dots bg-black bg-opacity-90"></div>
       
-      {/* Sticky container to keep content in view as we scroll */}
-      <div className="sticky top-0 min-h-screen py-10 flex items-center justify-center">
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="flex flex-col items-center mb-8">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 text-center">
-              Comprehensive <span className="text-saakh-blue">Business Analysis</span>
-            </h2>
-            <p className="text-xl text-white/70 max-w-3xl text-center">
-              Get detailed insights and real-time data to make informed business decisions and prevent fraud.
-            </p>
-          </div>
-          
-          {isMobile ? (
-            // Mobile view layout
-            <div className="flex flex-col space-y-16">
-              {/* First mobile screen */}
-              <div className="flex flex-col items-center">
-                <div className="mobile-device mx-auto mb-6">
-                  <div className="relative rounded-[30px] overflow-hidden border-[6px] border-gray-800 bg-black shadow-2xl">
-                    <div className="absolute top-0 w-full h-4 bg-black z-20 flex justify-center items-center">
-                      <div className="w-16 h-3 bg-black rounded-b-lg"></div>
-                    </div>
-                    
-                    <div className="h-[400px] w-[220px] overflow-hidden relative bg-gradient-to-b from-black to-gray-900">
-                      {/* Mobile dashboard content */}
-                      <div className="p-4">
-                        <div className="text-white text-lg font-bold py-2">Dashboard</div>
-                        <div className="flex justify-between my-3">
-                          <div>
-                            <div className="text-gray-400 text-xs">Earnings</div>
-                            <div className="text-white font-bold">$ 85,222</div>
-                          </div>
-                          <div>
-                            <div className="text-gray-400 text-xs">Expenses</div>
-                            <div className="text-white font-bold">- $52,150</div>
-                          </div>
+      {/* Content container */}
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="flex flex-col items-center mb-8 pt-20">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 text-center">
+            Comprehensive <span className="text-saakh-blue">Business Analysis</span>
+          </h2>
+          <p className="text-xl text-white/70 max-w-3xl text-center">
+            Get detailed insights and real-time data to make informed business decisions and prevent fraud.
+          </p>
+        </div>
+        
+        {isMobile ? (
+          // Mobile view layout
+          <div className="flex flex-col space-y-16 pb-16">
+            {/* First mobile screen */}
+            <div className="flex flex-col items-center">
+              <div className="mobile-device mx-auto mb-6">
+                <div className="relative rounded-[30px] overflow-hidden border-[6px] border-gray-800 bg-black shadow-2xl">
+                  <div className="absolute top-0 w-full h-4 bg-black z-20 flex justify-center items-center">
+                    <div className="w-16 h-3 bg-black rounded-b-lg"></div>
+                  </div>
+                  
+                  <div className="h-[400px] w-[220px] overflow-hidden relative bg-gradient-to-b from-black to-gray-900">
+                    {/* Mobile dashboard content */}
+                    <div className="p-4">
+                      <div className="text-white text-lg font-bold py-2">Dashboard</div>
+                      <div className="flex justify-between my-3">
+                        <div>
+                          <div className="text-gray-400 text-xs">Earnings</div>
+                          <div className="text-white font-bold">$ 85,222</div>
                         </div>
-                        
-                        {/* Chart */}
-                        <div className="h-[120px] bg-gray-900 rounded-lg my-3 flex items-end justify-between p-2">
-                          {[40, 60, 30, 20, 50, 70, 45].map((height, i) => (
-                            <div key={i} className="w-6 flex flex-col items-center">
-                              <div className="h-16 w-full flex flex-col-reverse">
-                                <div 
-                                  className="w-full bg-saakh-blue rounded-t" 
-                                  style={{height: `${height}%`}}
-                                ></div>
-                              </div>
+                        <div>
+                          <div className="text-gray-400 text-xs">Expenses</div>
+                          <div className="text-white font-bold">- $52,150</div>
+                        </div>
+                      </div>
+                      
+                      {/* Chart */}
+                      <div className="h-[120px] bg-gray-900 rounded-lg my-3 flex items-end justify-between p-2">
+                        {[40, 60, 30, 20, 50, 70, 45].map((height, i) => (
+                          <div key={i} className="w-6 flex flex-col items-center">
+                            <div className="h-16 w-full flex flex-col-reverse">
+                              <div 
+                                className="w-full bg-saakh-blue rounded-t" 
+                                style={{height: `${height}%`}}
+                              ></div>
                             </div>
-                          ))}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* First card for mobile */}
+              <div className="bg-black/30 backdrop-blur-md border border-white/10 rounded-xl p-6 w-full aspect-square">
+                <div className="text-saakh-blue/80 text-sm mb-1">{featureCards[0].label}</div>
+                <h3 className="text-white text-xl font-bold mb-3">{featureCards[0].title}</h3>
+                <p className="text-white/70 mb-4">{featureCards[0].description}</p>
+                <ul className="space-y-2">
+                  {featureCards[0].items.map((item, i) => (
+                    <li key={i} className="flex items-center">
+                      <div className="w-5 h-5 rounded-full bg-saakh-blue/20 flex items-center justify-center mr-3">
+                        <div className="w-2 h-2 rounded-full bg-saakh-blue"></div>
+                      </div>
+                      <span className="text-white/80">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+            
+            {/* Second mobile screen */}
+            <div className="flex flex-col items-center">
+              <div className="mobile-device mx-auto mb-6">
+                <div className="relative rounded-[30px] overflow-hidden border-[6px] border-gray-800 bg-black shadow-2xl">
+                  <div className="absolute top-0 w-full h-4 bg-black z-20 flex justify-center items-center">
+                    <div className="w-16 h-3 bg-black rounded-b-lg"></div>
+                  </div>
+                  
+                  <div className="h-[400px] w-[220px] overflow-hidden relative bg-gradient-to-b from-black to-gray-900">
+                    {/* Mobile dashboard content */}
+                    <div className="p-4">
+                      <div className="text-white text-lg font-bold py-2">Financial Insights</div>
+                      
+                      {/* Pie chart mock */}
+                      <div className="h-[120px] w-[120px] bg-gray-900 rounded-full my-4 mx-auto border border-saakh-blue"></div>
+                      
+                      <div className="flex justify-between my-3">
+                        <div>
+                          <div className="text-gray-400 text-xs">Category</div>
+                          <div className="text-white font-bold">Food & Drink</div>
+                        </div>
+                        <div>
+                          <div className="text-gray-400 text-xs">Total Spend</div>
+                          <div className="text-white font-bold">$1,245.89</div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                
-                {/* First card for mobile */}
-                <div className="bg-black/30 backdrop-blur-md border border-white/10 rounded-xl p-6 w-full">
-                  <div className="text-saakh-blue/80 text-sm mb-1">{featureCards[0].label}</div>
-                  <h3 className="text-white text-xl font-bold mb-3">{featureCards[0].title}</h3>
-                  <p className="text-white/70 mb-4">{featureCards[0].description}</p>
-                  <ul className="space-y-2">
-                    {featureCards[0].items.map((item, i) => (
-                      <li key={i} className="flex items-center">
-                        <div className="w-5 h-5 rounded-full bg-saakh-blue/20 flex items-center justify-center mr-3">
-                          <div className="w-2 h-2 rounded-full bg-saakh-blue"></div>
-                        </div>
-                        <span className="text-white/80">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
               </div>
               
-              {/* Second mobile screen */}
-              <div className="flex flex-col items-center">
-                <div className="mobile-device mx-auto mb-6">
-                  <div className="relative rounded-[30px] overflow-hidden border-[6px] border-gray-800 bg-black shadow-2xl">
-                    <div className="absolute top-0 w-full h-4 bg-black z-20 flex justify-center items-center">
-                      <div className="w-16 h-3 bg-black rounded-b-lg"></div>
-                    </div>
-                    
-                    <div className="h-[400px] w-[220px] overflow-hidden relative bg-gradient-to-b from-black to-gray-900">
-                      {/* Mobile dashboard content */}
-                      <div className="p-4">
-                        <div className="text-white text-lg font-bold py-2">Financial Insights</div>
-                        
-                        {/* Pie chart mock */}
-                        <div className="h-[120px] w-[120px] bg-gray-900 rounded-full my-4 mx-auto border border-saakh-blue"></div>
-                        
-                        <div className="flex justify-between my-3">
-                          <div>
-                            <div className="text-gray-400 text-xs">Category</div>
-                            <div className="text-white font-bold">Food & Drink</div>
-                          </div>
-                          <div>
-                            <div className="text-gray-400 text-xs">Total Spend</div>
-                            <div className="text-white font-bold">$1,245.89</div>
-                          </div>
-                        </div>
+              {/* Second card for mobile */}
+              <div className="bg-black/30 backdrop-blur-md border border-white/10 rounded-xl p-6 w-full aspect-square">
+                <div className="text-saakh-blue/80 text-sm mb-1">{featureCards[1].label}</div>
+                <h3 className="text-white text-xl font-bold mb-3">{featureCards[1].title}</h3>
+                <p className="text-white/70 mb-4">{featureCards[1].description}</p>
+                <ul className="space-y-2">
+                  {featureCards[1].items.map((item, i) => (
+                    <li key={i} className="flex items-center">
+                      <div className="w-5 h-5 rounded-full bg-saakh-blue/20 flex items-center justify-center mr-3">
+                        <div className="w-2 h-2 rounded-full bg-saakh-blue"></div>
                       </div>
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Second card for mobile */}
-                <div className="bg-black/30 backdrop-blur-md border border-white/10 rounded-xl p-6 w-full">
-                  <div className="text-saakh-blue/80 text-sm mb-1">{featureCards[1].label}</div>
-                  <h3 className="text-white text-xl font-bold mb-3">{featureCards[1].title}</h3>
-                  <p className="text-white/70 mb-4">{featureCards[1].description}</p>
-                  <ul className="space-y-2">
-                    {featureCards[1].items.map((item, i) => (
-                      <li key={i} className="flex items-center">
-                        <div className="w-5 h-5 rounded-full bg-saakh-blue/20 flex items-center justify-center mr-3">
-                          <div className="w-2 h-2 rounded-full bg-saakh-blue"></div>
-                        </div>
-                        <span className="text-white/80">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                      <span className="text-white/80">{item}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              
-              {/* Third mobile screen */}
-              <div className="flex flex-col items-center">
-                <div className="mobile-device mx-auto mb-6">
-                  <div className="relative rounded-[30px] overflow-hidden border-[6px] border-gray-800 bg-black shadow-2xl">
-                    <div className="absolute top-0 w-full h-4 bg-black z-20 flex justify-center items-center">
-                      <div className="w-16 h-3 bg-black rounded-b-lg"></div>
-                    </div>
-                    
-                    <div className="h-[400px] w-[220px] overflow-hidden relative bg-gradient-to-b from-black to-gray-900">
-                      {/* Mobile dashboard content */}
-                      <div className="p-4">
-                        <div className="text-white text-lg font-bold py-2">Analytics</div>
-                        
-                        {/* Bar chart mock */}
-                        <div className="h-[150px] bg-gray-900 rounded-lg my-3 flex items-end justify-between p-2">
-                          {[60, 40, 80].map((height, i) => (
-                            <div key={i} className="w-16 flex flex-col items-center">
-                              <div className="h-24 w-full flex flex-col-reverse">
-                                <div 
-                                  className="w-full bg-saakh-blue rounded-t" 
-                                  style={{height: `${height}%`}}
-                                ></div>
-                              </div>
-                              <div className="text-gray-400 text-xs mt-2">
-                                {['Q1', 'Q2', 'Q3'][i]}
-                              </div>
+            </div>
+            
+            {/* Third mobile screen */}
+            <div className="flex flex-col items-center">
+              <div className="mobile-device mx-auto mb-6">
+                <div className="relative rounded-[30px] overflow-hidden border-[6px] border-gray-800 bg-black shadow-2xl">
+                  <div className="absolute top-0 w-full h-4 bg-black z-20 flex justify-center items-center">
+                    <div className="w-16 h-3 bg-black rounded-b-lg"></div>
+                  </div>
+                  
+                  <div className="h-[400px] w-[220px] overflow-hidden relative bg-gradient-to-b from-black to-gray-900">
+                    {/* Mobile dashboard content */}
+                    <div className="p-4">
+                      <div className="text-white text-lg font-bold py-2">Analytics</div>
+                      
+                      {/* Bar chart mock */}
+                      <div className="h-[150px] bg-gray-900 rounded-lg my-3 flex items-end justify-between p-2">
+                        {[60, 40, 80].map((height, i) => (
+                          <div key={i} className="w-16 flex flex-col items-center">
+                            <div className="h-24 w-full flex flex-col-reverse">
+                              <div 
+                                className="w-full bg-saakh-blue rounded-t" 
+                                style={{height: `${height}%`}}
+                              ></div>
                             </div>
-                          ))}
-                        </div>
+                            <div className="text-gray-400 text-xs mt-2">
+                              {['Q1', 'Q2', 'Q3'][i]}
+                            </div>
+                          </div>
+                        ))}
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          ) : (
-            // Desktop view layout with scroll effects and sticky behavior
-            <div className="flex justify-center relative h-[70vh]">
-              {/* Mobile in center - always visible and sticky */}
-              <div className="absolute left-1/2 transform -translate-x-1/2 flex justify-center z-20">
+          </div>
+        ) : (
+          // Desktop view layout with scroll effects and sticky behavior
+          <div className="h-[300vh] relative">
+            {/* Sticky container for the mobile and labels only */}
+            <div className="sticky top-0 h-screen flex items-center justify-center">
+              {/* Mobile in center with labels */}
+              <div ref={mobileDeviceRef} className="relative flex justify-center items-center">
                 <div className="relative rounded-[40px] overflow-hidden border-[8px] border-gray-800 bg-black shadow-2xl">
                   <div className="absolute top-0 w-full h-6 bg-black z-20 flex justify-center items-center">
                     <div className="w-20 h-4 bg-black rounded-b-lg"></div>
@@ -424,74 +426,75 @@ const FeatureSection = () => {
                     ))}
                   </>
                 )}
-              </div>
-              
-              {/* Card 1 - Comes from bottom on the right side */}
-              <div 
-                className={`absolute aspect-square w-80 h-80 transition-all duration-700 ease-out`}
-                style={{
-                  right: '5%',
-                  opacity: scrollPhase === 1 ? 1 : 0,
-                  transform: `translateY(${
-                    scrollPhase === 0 
-                      ? '100vh' 
-                      : (scrollPhase === 1 
-                        ? `${(1 - scrollProgress) * 100}vh` 
-                        : `-${scrollProgress * 100}vh`)
-                  })`,
-                  visibility: (scrollPhase === 0 && scrollProgress > 0.9) || scrollPhase >= 1 ? 'visible' : 'hidden',
-                }}
-              >
-                <div className="feature-card w-full h-full p-8 bg-black/30 backdrop-blur-md border border-white/10 rounded-xl shadow-lg">
-                  <div className="text-saakh-blue/80 text-sm mb-1">{featureCards[0].label}</div>
-                  <h3 className="text-white text-2xl font-bold mb-3">{featureCards[0].title}</h3>
-                  <p className="text-white/70 mb-4">{featureCards[0].description}</p>
-                  <ul className="space-y-2">
-                    {featureCards[0].items.map((item, i) => (
-                      <li key={i} className="flex items-center">
-                        <div className="w-5 h-5 rounded-full bg-saakh-blue/20 flex items-center justify-center mr-3">
-                          <div className="w-2 h-2 rounded-full bg-saakh-blue"></div>
-                        </div>
-                        <span className="text-white/80">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-              
-              {/* Card 2 - Comes from bottom on the left side */}
-              <div 
-                className={`absolute aspect-square w-80 h-80 transition-all duration-700 ease-out`}
-                style={{
-                  left: '5%',
-                  opacity: scrollPhase === 2 ? 1 : 0,
-                  transform: `translateY(${
-                    scrollPhase < 2 
-                      ? '100vh' 
-                      : `${(1 - scrollProgress) * 100}vh`
-                  })`,
-                  visibility: (scrollPhase === 1 && scrollProgress > 0.9) || scrollPhase === 2 ? 'visible' : 'hidden',
-                }}
-              >
-                <div className="feature-card w-full h-full p-8 bg-black/30 backdrop-blur-md border border-white/10 rounded-xl shadow-lg">
-                  <div className="text-saakh-blue/80 text-sm mb-1">{featureCards[1].label}</div>
-                  <h3 className="text-white text-2xl font-bold mb-3">{featureCards[1].title}</h3>
-                  <p className="text-white/70 mb-4">{featureCards[1].description}</p>
-                  <ul className="space-y-2">
-                    {featureCards[1].items.map((item, i) => (
-                      <li key={i} className="flex items-center">
-                        <div className="w-5 h-5 rounded-full bg-saakh-blue/20 flex items-center justify-center mr-3">
-                          <div className="w-2 h-2 rounded-full bg-saakh-blue"></div>
-                        </div>
-                        <span className="text-white/80">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                
+                {/* Glowing orb behind phone */}
+                <div className="absolute w-64 h-64 bg-saakh-blue/20 rounded-full filter blur-3xl top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-pulse-soft"></div>
               </div>
             </div>
-          )}
-        </div>
+            
+            {/* Card 1 - Comes from bottom on the right side */}
+            <div 
+              className={`absolute right-1/4 aspect-square w-80 h-80 transition-all duration-700 ease-out`}
+              style={{
+                opacity: scrollPhase >= 1 ? 1 : 0,
+                top: `calc(100vh + ${
+                  scrollPhase === 0 
+                    ? '100vh' 
+                    : (scrollPhase === 1 
+                      ? `${(1 - scrollProgress) * 100}vh` 
+                      : `-${scrollProgress * 100}vh`)
+                })`,
+                visibility: (scrollPhase === 0 && scrollProgress > 0.9) || scrollPhase >= 1 ? 'visible' : 'hidden',
+              }}
+            >
+              <div className="feature-card w-full h-full p-8 bg-black/30 backdrop-blur-md border border-white/10 rounded-xl shadow-lg">
+                <div className="text-saakh-blue/80 text-sm mb-1">{featureCards[0].label}</div>
+                <h3 className="text-white text-2xl font-bold mb-3">{featureCards[0].title}</h3>
+                <p className="text-white/70 mb-4">{featureCards[0].description}</p>
+                <ul className="space-y-2">
+                  {featureCards[0].items.map((item, i) => (
+                    <li key={i} className="flex items-center">
+                      <div className="w-5 h-5 rounded-full bg-saakh-blue/20 flex items-center justify-center mr-3">
+                        <div className="w-2 h-2 rounded-full bg-saakh-blue"></div>
+                      </div>
+                      <span className="text-white/80">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+            
+            {/* Card 2 - Comes from bottom on the left side */}
+            <div 
+              className={`absolute left-1/4 aspect-square w-80 h-80 transition-all duration-700 ease-out`}
+              style={{
+                opacity: scrollPhase >= 2 ? 1 : 0,
+                top: `calc(200vh + ${
+                  scrollPhase < 2 
+                    ? '100vh' 
+                    : `${(1 - scrollProgress) * 100}vh`
+                })`,
+                visibility: (scrollPhase === 1 && scrollProgress > 0.9) || scrollPhase >= 2 ? 'visible' : 'hidden',
+              }}
+            >
+              <div className="feature-card w-full h-full p-8 bg-black/30 backdrop-blur-md border border-white/10 rounded-xl shadow-lg">
+                <div className="text-saakh-blue/80 text-sm mb-1">{featureCards[1].label}</div>
+                <h3 className="text-white text-2xl font-bold mb-3">{featureCards[1].title}</h3>
+                <p className="text-white/70 mb-4">{featureCards[1].description}</p>
+                <ul className="space-y-2">
+                  {featureCards[1].items.map((item, i) => (
+                    <li key={i} className="flex items-center">
+                      <div className="w-5 h-5 rounded-full bg-saakh-blue/20 flex items-center justify-center mr-3">
+                        <div className="w-2 h-2 rounded-full bg-saakh-blue"></div>
+                      </div>
+                      <span className="text-white/80">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
