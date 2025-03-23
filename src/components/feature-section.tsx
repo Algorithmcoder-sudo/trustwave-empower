@@ -1,11 +1,9 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const FeatureSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const mobileDeviceRef = useRef<HTMLDivElement>(null);
-  const mobileScreenRef = useRef<HTMLDivElement>(null);
   const [scrollPhase, setScrollPhase] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const isMobile = useIsMobile();
@@ -113,21 +111,12 @@ const FeatureSection = () => {
       const scrollPosition = Math.max(0, -sectionTop + windowHeight * 0.1);
       
       // Each phase is one screen height worth of scrolling
-      const phaseHeight = windowHeight * 0.9; // 90% of screen height per phase
+      const phaseHeight = windowHeight * 0.8; // 80% of screen height per phase
       const currentPhase = Math.min(2, Math.floor(scrollPosition / phaseHeight));
       const phaseProgress = (scrollPosition % phaseHeight) / phaseHeight;
       
       setScrollPhase(currentPhase);
       setScrollProgress(phaseProgress);
-      
-      // Update mobile screen scroll based on overall progress
-      if (mobileScreenRef.current) {
-        const maxScroll = 600; // Adjust based on actual content height
-        const totalPhases = 3; // Total number of phases
-        const scrollRatio = Math.min(1, (scrollPosition / (phaseHeight * totalPhases)));
-        const scrollY = scrollRatio * maxScroll;
-        mobileScreenRef.current.style.transform = `translateY(-${scrollY}px)`;
-      }
     };
     
     window.addEventListener('scroll', handleScroll);
@@ -140,7 +129,7 @@ const FeatureSection = () => {
   return (
     <section 
       ref={sectionRef} 
-      className="min-h-[300vh] relative overflow-hidden bg-black"
+      className="min-h-[250vh] relative overflow-hidden bg-black"
     >
       <div className="absolute inset-0 floating-dots bg-black bg-opacity-90"></div>
       
@@ -157,7 +146,7 @@ const FeatureSection = () => {
         
         {isMobile ? (
           // Mobile view layout
-          <div className="flex flex-col space-y-16 pb-16">
+          <div className="flex flex-col space-y-8 pb-16">
             {/* First mobile screen */}
             <div className="flex flex-col items-center">
               <div className="mobile-device mx-auto mb-6">
@@ -303,103 +292,75 @@ const FeatureSection = () => {
           </div>
         ) : (
           // Desktop view layout with scroll effects and sticky behavior
-          <div className="h-[300vh] relative">
-            {/* Sticky container for the mobile and labels only */}
-            <div className="sticky top-0 h-screen flex items-center justify-center">
+          <div className="h-[240vh] relative">
+            {/* Sticky container for the mobile device and labels */}
+            <div className="sticky top-0 h-screen w-full flex items-center justify-center">
               {/* Mobile in center with labels */}
-              <div ref={mobileDeviceRef} className="relative flex justify-center items-center">
+              <div ref={mobileDeviceRef} className="relative">
                 <div className="relative rounded-[40px] overflow-hidden border-[8px] border-gray-800 bg-black shadow-2xl">
                   <div className="absolute top-0 w-full h-6 bg-black z-20 flex justify-center items-center">
                     <div className="w-20 h-4 bg-black rounded-b-lg"></div>
                   </div>
                   
                   <div className="h-[600px] w-[300px] overflow-hidden relative">
-                    {/* Scrollable content in the phone */}
-                    <div ref={mobileScreenRef} className="transition-transform duration-700 ease-out">
-                      <div className="bg-gradient-to-b from-black to-gray-900 h-[1800px] w-full">
-                        {/* Dashboard Content */}
-                        <div className="p-4">
-                          <div className="text-white text-xl font-bold py-2">Dashboard</div>
-                          <div className="flex justify-between my-4">
-                            <div>
-                              <div className="text-gray-400 text-xs">Earnings</div>
-                              <div className="text-white font-bold">$ 85,222.00</div>
-                            </div>
-                            <div>
-                              <div className="text-gray-400 text-xs">Expenses</div>
-                              <div className="text-white font-bold">- $52,150.50</div>
-                            </div>
+                    {/* Fixed content in the phone instead of scrolling */}
+                    <div className="bg-gradient-to-b from-black to-gray-900 h-[600px] w-full">
+                      <div className="p-4">
+                        <div className="text-white text-xl font-bold py-2">Dashboard</div>
+                        <div className="flex justify-between my-4">
+                          <div>
+                            <div className="text-gray-400 text-xs">Earnings</div>
+                            <div className="text-white font-bold">$ 85,222.00</div>
                           </div>
-                          
-                          {/* Chart */}
-                          <div className="h-[180px] bg-gray-900 rounded-lg my-4 flex items-end justify-between p-2">
-                            {[40, 60, 30, 20, 50, 70, 45].map((height, i) => (
-                              <div key={i} className="w-8 flex flex-col items-center">
-                                <div className="h-24 w-full flex flex-col-reverse">
-                                  <div 
-                                    className="w-full bg-saakh-blue rounded-t" 
-                                    style={{height: `${height}%`}}
-                                  ></div>
-                                  <div 
-                                    className="w-full bg-red-400 rounded-t" 
-                                    style={{height: `${Math.min(100-height, 40)}%`}}
-                                  ></div>
-                                </div>
-                                <div className="text-gray-400 text-xs mt-2">
-                                  {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'][i]}
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                          
-                          {/* Transactions */}
-                          <div className="text-white text-xl font-bold py-2 mt-4">Transactions</div>
-                          
-                          {[
-                            {icon: "☕", name: "Coffee", category: "Restaurants", amount: "$3.99"},
-                            {icon: "🍔", name: "Fast Food", category: "Restaurants", amount: "$12.99"},
-                            {icon: "✈️", name: "Sunny Holidays", category: "Travel", amount: "$1,200.00"},
-                            {icon: "👔", name: "Clothes", category: "Shopping", amount: "$250.00"}
-                          ].map((tx, i) => (
-                            <div key={i} className="flex items-center justify-between p-3 border-b border-gray-800">
-                              <div className="flex items-center">
-                                <div className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center mr-3">
-                                  {tx.icon}
-                                </div>
-                                <div>
-                                  <div className="text-white">{tx.name}</div>
-                                  <div className="text-gray-400 text-xs">{tx.category}</div>
-                                </div>
-                              </div>
-                              <div className="text-white">- {tx.amount}</div>
-                            </div>
-                          ))}
-                          
-                          {/* More charts */}
-                          <div className="text-white text-xl font-bold py-2 mt-8">Monthly Expenses</div>
-                          <div className="h-[160px] w-[160px] bg-gray-900 rounded-full my-4 mx-auto"></div>
-                          
-                          <div className="text-white text-xl font-bold py-2 mt-8">Yearly Expenses</div>
-                          <div className="h-[180px] bg-gray-900 rounded-lg my-4 flex items-end justify-between p-2">
-                            {[40, 70, 35].map((height, i) => (
-                              <div key={i} className="w-20 flex flex-col items-center">
-                                <div className="h-24 w-full flex flex-col-reverse">
-                                  <div 
-                                    className="w-full bg-saakh-blue rounded-t" 
-                                    style={{height: `${height}%`}}
-                                  ></div>
-                                  <div 
-                                    className="w-full bg-red-400 rounded-t" 
-                                    style={{height: `${Math.min(100-height, 40)}%`}}
-                                  ></div>
-                                </div>
-                                <div className="text-gray-400 text-xs mt-2">
-                                  {['2022', '2023', '2024'][i]}
-                                </div>
-                              </div>
-                            ))}
+                          <div>
+                            <div className="text-gray-400 text-xs">Expenses</div>
+                            <div className="text-white font-bold">- $52,150.50</div>
                           </div>
                         </div>
+                        
+                        {/* Chart */}
+                        <div className="h-[180px] bg-gray-900 rounded-lg my-4 flex items-end justify-between p-2">
+                          {[40, 60, 30, 20, 50, 70, 45].map((height, i) => (
+                            <div key={i} className="w-8 flex flex-col items-center">
+                              <div className="h-24 w-full flex flex-col-reverse">
+                                <div 
+                                  className="w-full bg-saakh-blue rounded-t" 
+                                  style={{height: `${height}%`}}
+                                ></div>
+                                <div 
+                                  className="w-full bg-red-400 rounded-t" 
+                                  style={{height: `${Math.min(100-height, 40)}%`}}
+                                ></div>
+                              </div>
+                              <div className="text-gray-400 text-xs mt-2">
+                                {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'][i]}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                        
+                        {/* Transactions */}
+                        <div className="text-white text-xl font-bold py-2 mt-4">Transactions</div>
+                        
+                        {[
+                          {icon: "☕", name: "Coffee", category: "Restaurants", amount: "$3.99"},
+                          {icon: "🍔", name: "Fast Food", category: "Restaurants", amount: "$12.99"},
+                          {icon: "✈️", name: "Sunny Holidays", category: "Travel", amount: "$1,200.00"},
+                          {icon: "👔", name: "Clothes", category: "Shopping", amount: "$250.00"}
+                        ].map((tx, i) => (
+                          <div key={i} className="flex items-center justify-between p-3 border-b border-gray-800">
+                            <div className="flex items-center">
+                              <div className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center mr-3">
+                                {tx.icon}
+                              </div>
+                              <div>
+                                <div className="text-white">{tx.name}</div>
+                                <div className="text-gray-400 text-xs">{tx.category}</div>
+                              </div>
+                            </div>
+                            <div className="text-white">- {tx.amount}</div>
+                          </div>
+                        ))}
                       </div>
                     </div>
                   </div>
@@ -434,17 +395,17 @@ const FeatureSection = () => {
             
             {/* Card 1 - Comes from bottom on the right side */}
             <div 
-              className={`absolute right-1/4 aspect-square w-80 h-80 transition-all duration-700 ease-out`}
+              className="absolute w-96 h-96 aspect-square transition-all duration-700 ease-out left-1/2 ml-56"
               style={{
-                opacity: scrollPhase >= 1 ? 1 : 0,
+                opacity: (scrollPhase >= 1 || (scrollPhase === 0 && scrollProgress > 0.8)) ? 1 : 0,
                 top: `calc(100vh + ${
                   scrollPhase === 0 
-                    ? '100vh' 
+                    ? `${(1 - scrollProgress) * 100 + 50}vh` 
                     : (scrollPhase === 1 
-                      ? `${(1 - scrollProgress) * 100}vh` 
+                      ? `${(1 - scrollProgress) * 80}vh` 
                       : `-${scrollProgress * 100}vh`)
                 })`,
-                visibility: (scrollPhase === 0 && scrollProgress > 0.9) || scrollPhase >= 1 ? 'visible' : 'hidden',
+                visibility: (scrollPhase === 0 && scrollProgress > 0.5) || scrollPhase >= 1 ? 'visible' : 'hidden',
               }}
             >
               <div className="feature-card w-full h-full p-8 bg-black/30 backdrop-blur-md border border-white/10 rounded-xl shadow-lg">
@@ -466,15 +427,17 @@ const FeatureSection = () => {
             
             {/* Card 2 - Comes from bottom on the left side */}
             <div 
-              className={`absolute left-1/4 aspect-square w-80 h-80 transition-all duration-700 ease-out`}
+              className="absolute w-96 h-96 aspect-square transition-all duration-700 ease-out left-1/2 -ml-56 -translate-x-full" 
               style={{
-                opacity: scrollPhase >= 2 ? 1 : 0,
-                top: `calc(200vh + ${
-                  scrollPhase < 2 
+                opacity: (scrollPhase >= 2 || (scrollPhase === 1 && scrollProgress > 0.8)) ? 1 : 0,
+                top: `calc(100vh + ${
+                  scrollPhase < 1 
                     ? '100vh' 
-                    : `${(1 - scrollProgress) * 100}vh`
+                    : (scrollPhase === 1 
+                      ? `${(1 - scrollProgress) * 100 + 50}vh` 
+                      : `${(1 - scrollProgress) * 80}vh`)
                 })`,
-                visibility: (scrollPhase === 1 && scrollProgress > 0.9) || scrollPhase >= 2 ? 'visible' : 'hidden',
+                visibility: (scrollPhase === 1 && scrollProgress > 0.5) || scrollPhase >= 2 ? 'visible' : 'hidden',
               }}
             >
               <div className="feature-card w-full h-full p-8 bg-black/30 backdrop-blur-md border border-white/10 rounded-xl shadow-lg">
@@ -501,3 +464,4 @@ const FeatureSection = () => {
 };
 
 export default FeatureSection;
+
