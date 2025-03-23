@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -112,7 +113,7 @@ const FeatureSection = () => {
       
       // Each phase is one screen height worth of scrolling
       const phaseHeight = windowHeight * 0.9; // 90% of screen height per phase
-      const currentPhase = Math.floor(scrollPosition / phaseHeight);
+      const currentPhase = Math.min(2, Math.floor(scrollPosition / phaseHeight));
       const phaseProgress = (scrollPosition % phaseHeight) / phaseHeight;
       
       setScrollPhase(currentPhase);
@@ -121,7 +122,9 @@ const FeatureSection = () => {
       // Update mobile screen scroll based on overall progress
       if (mobileScreenRef.current) {
         const maxScroll = 600; // Adjust based on actual content height
-        const scrollY = (scrollPosition / (phaseHeight * 3)) * maxScroll;
+        const totalPhases = 3; // Total number of phases
+        const scrollRatio = Math.min(1, (scrollPosition / (phaseHeight * totalPhases)));
+        const scrollY = scrollRatio * maxScroll;
         mobileScreenRef.current.style.transform = `translateY(-${scrollY}px)`;
       }
     };
@@ -299,11 +302,11 @@ const FeatureSection = () => {
               </div>
             </div>
           ) : (
-            // Desktop view layout with scroll effects
+            // Desktop view layout with scroll effects and sticky behavior
             <div className="flex justify-center relative h-[70vh]">
               {/* Mobile in center - always visible and sticky */}
-              <div className="absolute left-1/2 transform -translate-x-1/2 flex justify-center">
-                <div className="relative rounded-[40px] overflow-hidden border-[8px] border-gray-800 bg-black shadow-2xl z-20">
+              <div className="absolute left-1/2 transform -translate-x-1/2 flex justify-center z-20">
+                <div className="relative rounded-[40px] overflow-hidden border-[8px] border-gray-800 bg-black shadow-2xl">
                   <div className="absolute top-0 w-full h-6 bg-black z-20 flex justify-center items-center">
                     <div className="w-20 h-4 bg-black rounded-b-lg"></div>
                   </div>
@@ -423,19 +426,23 @@ const FeatureSection = () => {
                 )}
               </div>
               
-              {/* Card container - right side */}
-              <div className="absolute right-0 w-1/3 h-full">
-                {/* First card - comes from bottom on right side */}
-                <div 
-                  className="feature-card aspect-square w-full p-8 bg-black/30 backdrop-blur-md border border-white/10 rounded-xl shadow-lg transition-all duration-500 absolute"
-                  style={{
-                    opacity: scrollPhase === 1 ? 1 : 0,
-                    transform: scrollPhase === 1 
-                      ? `translateY(${(1 - scrollProgress) * 100}%)`
-                      : 'translateY(100%)',
-                    visibility: scrollPhase === 1 || (scrollPhase === 0 && scrollProgress > 0.8) ? 'visible' : 'hidden',
-                  }}
-                >
+              {/* Card 1 - Comes from bottom on the right side */}
+              <div 
+                className={`absolute aspect-square w-80 h-80 transition-all duration-700 ease-out`}
+                style={{
+                  right: '5%',
+                  opacity: scrollPhase === 1 ? 1 : 0,
+                  transform: `translateY(${
+                    scrollPhase === 0 
+                      ? '100vh' 
+                      : (scrollPhase === 1 
+                        ? `${(1 - scrollProgress) * 100}vh` 
+                        : `-${scrollProgress * 100}vh`)
+                  })`,
+                  visibility: (scrollPhase === 0 && scrollProgress > 0.9) || scrollPhase >= 1 ? 'visible' : 'hidden',
+                }}
+              >
+                <div className="feature-card w-full h-full p-8 bg-black/30 backdrop-blur-md border border-white/10 rounded-xl shadow-lg">
                   <div className="text-saakh-blue/80 text-sm mb-1">{featureCards[0].label}</div>
                   <h3 className="text-white text-2xl font-bold mb-3">{featureCards[0].title}</h3>
                   <p className="text-white/70 mb-4">{featureCards[0].description}</p>
@@ -452,19 +459,21 @@ const FeatureSection = () => {
                 </div>
               </div>
               
-              {/* Card container - left side */}
-              <div className="absolute left-0 w-1/3 h-full">
-                {/* Second card - comes from bottom on left side */}
-                <div 
-                  className="feature-card aspect-square w-full p-8 bg-black/30 backdrop-blur-md border border-white/10 rounded-xl shadow-lg transition-all duration-500 absolute"
-                  style={{
-                    opacity: scrollPhase === 2 ? 1 : 0,
-                    transform: scrollPhase === 2 
-                      ? `translateY(${(1 - scrollProgress) * 100}%)`
-                      : 'translateY(100%)',
-                    visibility: scrollPhase === 2 || (scrollPhase === 1 && scrollProgress > 0.8) ? 'visible' : 'hidden',
-                  }}
-                >
+              {/* Card 2 - Comes from bottom on the left side */}
+              <div 
+                className={`absolute aspect-square w-80 h-80 transition-all duration-700 ease-out`}
+                style={{
+                  left: '5%',
+                  opacity: scrollPhase === 2 ? 1 : 0,
+                  transform: `translateY(${
+                    scrollPhase < 2 
+                      ? '100vh' 
+                      : `${(1 - scrollProgress) * 100}vh`
+                  })`,
+                  visibility: (scrollPhase === 1 && scrollProgress > 0.9) || scrollPhase === 2 ? 'visible' : 'hidden',
+                }}
+              >
+                <div className="feature-card w-full h-full p-8 bg-black/30 backdrop-blur-md border border-white/10 rounded-xl shadow-lg">
                   <div className="text-saakh-blue/80 text-sm mb-1">{featureCards[1].label}</div>
                   <h3 className="text-white text-2xl font-bold mb-3">{featureCards[1].title}</h3>
                   <p className="text-white/70 mb-4">{featureCards[1].description}</p>
