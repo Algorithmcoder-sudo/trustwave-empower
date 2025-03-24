@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 const FeatureSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -46,7 +47,7 @@ const FeatureSection = () => {
       ]
     }
   ];
-  
+
   const labels = [
     { text: "+ $4,250 Salary", color: "text-saakh-blue", position: { left: "-290px", top: "100px" }, icon: "💵" },
     { text: "- $3.99 Coffee", color: "text-saakh-cyan", position: { right: "-290px", top: "80px" }, icon: "☕" },
@@ -134,7 +135,7 @@ const FeatureSection = () => {
       <div className="absolute inset-0 floating-dots bg-black bg-opacity-90"></div>
       
       {/* Content container */}
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-6 relative z-10">
         <div className="flex flex-col items-center mb-8 pt-20">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 text-center">
             Comprehensive <span className="text-saakh-blue">Business Analysis</span>
@@ -145,7 +146,7 @@ const FeatureSection = () => {
         </div>
         
         {isMobile ? (
-          // Mobile view layout
+          // Mobile view layout - keep unchanged
           <div className="flex flex-col space-y-8 pb-16">
             {/* First mobile screen */}
             <div className="flex flex-col items-center">
@@ -310,8 +311,8 @@ const FeatureSection = () => {
             </div>
           </div>
         ) : (
-          // Desktop view layout - now only showing the mobile with business profile content
-          <div className="h-[100vh] relative flex justify-center items-center py-20">
+          // Desktop view layout - now showing a scrollable screenshot in a phone
+          <div className="py-20 relative flex justify-center items-center">
             {/* Mobile device with scrollable content */}
             <div ref={mobileDeviceRef} className="relative">
               <div className="relative rounded-[40px] overflow-hidden border-[8px] border-gray-800 bg-black shadow-2xl">
@@ -319,244 +320,16 @@ const FeatureSection = () => {
                   <div className="w-20 h-4 bg-black rounded-b-lg"></div>
                 </div>
                 
-                <div className="h-[600px] w-[300px] overflow-y-auto relative bg-white">
-                  {/* Company Profile Content */}
-                  <div className="bg-white">
-                    {/* Header with back button and verified icon */}
-                    <div className="flex items-center justify-between p-4 border-b">
-                      <div className="flex items-center">
-                        <svg className="w-5 h-5 text-gray-600 mr-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-                        </svg>
-                        <div className="text-xs text-gray-500">verified</div>
-                      </div>
-                      <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2z" />
-                      </svg>
-                    </div>
-                    
-                    {/* Company Profile */}
-                    <div className="p-4 flex items-start">
-                      <div className="w-14 h-14 rounded-full overflow-hidden bg-gray-200 mr-3">
-                        <img src="/lovable-uploads/606e2688-1f8c-488b-9f24-1940aae820f6.png" alt="Company logo" className="w-full h-full object-cover" />
-                      </div>
-                      <div>
-                        <h1 className="font-bold text-lg">R. K. INFRATEL LIMITED</h1>
-                        <p className="text-xs text-gray-500">Internet service provider |PUBLIC LIMITED</p>
-                        <p className="text-xs text-gray-500">Founded in 1993</p>
-                        <div className="flex items-center text-xs mt-2">
-                          <svg className="w-4 h-4 text-gray-600 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                          </svg>
-                          <span>Surat</span>
-                          <div className="h-3 border-l border-gray-300 mx-2"></div>
-                          <span>Rajaendra rachamalla sheth</span>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    {/* Tabs */}
-                    <div className="flex overflow-x-auto border-b text-xs text-gray-600 px-4">
-                      <div className="border-b-2 border-blue-500 px-4 py-2 text-blue-500 whitespace-nowrap">Business Summary</div>
-                      <div className="px-4 py-2 whitespace-nowrap">Compliance Risks</div>
-                      <div className="px-4 py-2 whitespace-nowrap">Defaults & Fraud</div>
-                    </div>
-                    
-                    {/* Business Summary Card */}
-                    <div className="p-4">
-                      <div className="flex items-center justify-between">
-                        <h2 className="font-bold text-lg">Business Summary</h2>
-                        <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                        </svg>
-                      </div>
-                      
-                      {/* Company Description */}
-                      <div className="mt-4">
-                        <h3 className="font-medium">Company Description</h3>
-                        <p className="text-xs text-gray-600 mt-1">
-                          Established and begun functioning in 1993 as R. K. Cable, 
-                          Net Det Ltd. which Presently is known as R.K. INFRATEL Ltd.
-                        </p>
-                      </div>
-                      
-                      {/* Ratings & Photos */}
-                      <div className="flex justify-between mt-4">
-                        <div>
-                          <div className="text-sm font-medium">Ratings</div>
-                          <div className="flex items-center mt-1">
-                            <div className="text-lg font-bold mr-1">3</div>
-                            <div className="flex">
-                              {[1, 2, 3].map(star => (
-                                <svg key={star} className="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                </svg>
-                              ))}
-                              {[4, 5].map(star => (
-                                <svg key={star} className="w-4 h-4 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
-                                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                </svg>
-                              ))}
-                            </div>
-                            <div className="text-xs text-gray-500 ml-1">(based on feedback)</div>
-                          </div>
-                        </div>
-                        <div>
-                          <div className="text-sm font-medium">Photos</div>
-                          <div className="w-12 h-12 bg-gray-200 rounded-md mt-1 overflow-hidden">
-                            <img src="/lovable-uploads/606e2688-1f8c-488b-9f24-1940aae820f6.png" className="w-full h-full object-cover" alt="Company" />
-                          </div>
-                        </div>
-                      </div>
-                      
-                      {/* Address */}
-                      <div className="mt-4">
-                        <h3 className="font-medium">Address:</h3>
-                        <p className="text-xs text-gray-600 mt-1">
-                          10th floor, No.24, Sundar Chambers, Ashram Path, 
-                          Ashram Road, Gujarat - 395000
-                        </p>
-                        <div className="flex mt-2 space-x-2">
-                          <button className="bg-blue-100 text-blue-500 text-xs py-1 px-3 rounded-full">Directions</button>
-                          <button className="bg-blue-100 text-blue-500 text-xs py-1 px-3 rounded-full">Website</button>
-                          <button className="bg-blue-500 text-white text-xs py-1 px-3 rounded-full flex items-center">
-                            <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                            </svg>
-                            Contact
-                          </button>
-                        </div>
-                      </div>
-                      
-                      {/* Action buttons */}
-                      <div className="flex justify-between mt-4">
-                        <button className="bg-blue-100 text-blue-500 text-xs py-1 px-3 rounded-full">ratings</button>
-                        <button className="bg-blue-100 text-blue-500 text-xs py-1 px-3 rounded-full">reviews</button>
-                        <button className="bg-blue-100 text-blue-500 text-xs py-1 px-3 rounded-full">photos</button>
-                      </div>
-                    </div>
-                    
-                    {/* Compliance Risks Card */}
-                    <div className="p-4 border-t mt-2">
-                      <div className="flex items-center justify-between">
-                        <h2 className="font-bold text-lg">Compliance Risks</h2>
-                        <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                        </svg>
-                      </div>
-                      
-                      <div className="flex items-center mt-4">
-                        <div className="mr-6">
-                          <div className="text-sm font-medium">Active</div>
-                          <div className="text-sm font-medium">Non-Compliances</div>
-                        </div>
-                        <div className="flex items-baseline">
-                          <span className="text-3xl font-bold text-red-500">7</span>
-                          <span className="text-xs text-gray-500">/95</span>
-                        </div>
-                      </div>
-                      
-                      {/* Non-compliance tags */}
-                      <div className="mt-4">
-                        <div className="text-xs text-gray-500 mb-2">Type of Non-Compliances</div>
-                        <div className="flex flex-wrap gap-2">
-                          <span className="bg-red-500 text-white text-xs py-1 px-3 rounded-full">SEVERE (1)</span>
-                          <span className="bg-orange-500 text-white text-xs py-1 px-3 rounded-full">HIGH (2)</span>
-                          <span className="bg-yellow-400 text-white text-xs py-1 px-3 rounded-full">PF Deduction Default</span>
-                          <span className="bg-yellow-400 text-white text-xs py-1 px-3 rounded-full">Staff PF</span>
-                          <span className="bg-blue-400 text-white text-xs py-1 px-3 rounded-full">IRDA/Structural</span>
-                          <span className="bg-blue-400 text-white text-xs py-1 px-3 rounded-full">GST Cancelled</span>
-                        </div>
-                        <div className="text-xs text-gray-500 mt-1 text-right">Tap to see details</div>
-                      </div>
-                    </div>
-                    
-                    {/* Defaults & Frauds Card */}
-                    <div className="p-4 border-t mt-2">
-                      <div className="flex items-center justify-between">
-                        <h2 className="font-bold text-lg">Defaults & Frauds</h2>
-                        <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                        </svg>
-                      </div>
-                      
-                      <div className="mt-4">
-                        <div className="text-sm font-medium mb-2">ACTIVE RISKS (10)</div>
-                        <div className="flex flex-wrap gap-2">
-                          <span className="bg-red-500 text-white text-xs py-1 px-3 rounded-full">PF Deduction Default</span>
-                          <span className="bg-red-500 text-white text-xs py-1 px-3 rounded-full">Staff PF</span>
-                          <span className="bg-red-400 text-white text-xs py-1 px-3 rounded-full">IRDA/Structural</span>
-                        </div>
-                      </div>
-                      
-                      <div className="mt-4">
-                        <div className="text-sm font-medium mb-2">PASSED CHECKS (10)</div>
-                        <div className="flex flex-wrap gap-2">
-                          <span className="bg-green-500 text-white text-xs py-1 px-3 rounded-full">GST Transaction History</span>
-                          <span className="bg-green-500 text-white text-xs py-1 px-3 rounded-full">GST Black Listed</span>
-                          <span className="bg-green-500 text-white text-xs py-1 px-3 rounded-full">RBI Defaulter List</span>
-                          <span className="bg-green-500 text-white text-xs py-1 px-3 rounded-full">TDS Default Default</span>
-                          <span className="bg-green-500 text-white text-xs py-1 px-3 rounded-full">CIBIL Default</span>
-                          <span className="bg-green-500 text-white text-xs py-1 px-3 rounded-full">GST Fraud</span>
-                          <span className="bg-green-500 text-white text-xs py-1 px-3 rounded-full">Bank Auction</span>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    {/* Business Reputation */}
-                    <div className="p-4 border-t mt-2">
-                      <h2 className="font-bold text-lg mb-4">Business Reputation</h2>
-                      
-                      <div className="space-y-4">
-                        <div className="flex justify-between">
-                          <div className="text-sm font-medium">Overall Score</div>
-                          <div className="text-sm font-medium text-blue-500">8.5/10</div>
-                        </div>
-                        
-                        <div className="flex justify-between">
-                          <div className="text-sm font-medium">Credit Score</div>
-                          <div className="text-sm font-medium text-blue-500">745</div>
-                        </div>
-                        
-                        <div className="flex justify-between">
-                          <div className="text-sm font-medium">User Trust</div>
-                          <div className="text-sm font-medium text-blue-500">High</div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    {/* Key Persons */}
-                    <div className="p-4 border-t mt-2">
-                      <h2 className="font-bold text-lg mb-4">Key Persons</h2>
-                      
-                      <div className="space-y-4">
-                        <div className="flex items-center">
-                          <div className="w-10 h-10 bg-gray-200 rounded-full mr-3 overflow-hidden">
-                            <div className="w-full h-full flex items-center justify-center bg-blue-100 text-blue-500 font-bold">
-                              RR
-                            </div>
-                          </div>
-                          <div>
-                            <div className="text-sm font-medium">Rajendra Rachamalla</div>
-                            <div className="text-xs text-gray-500">Director | Since 1993</div>
-                          </div>
-                        </div>
-                        
-                        <div className="flex items-center">
-                          <div className="w-10 h-10 bg-gray-200 rounded-full mr-3 overflow-hidden">
-                            <div className="w-full h-full flex items-center justify-center bg-green-100 text-green-500 font-bold">
-                              SK
-                            </div>
-                          </div>
-                          <div>
-                            <div className="text-sm font-medium">Sanjay Kumar</div>
-                            <div className="text-xs text-gray-500">CFO | Since 2005</div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                <div className="h-[600px] w-[300px] overflow-hidden relative bg-white">
+                  {/* Use ScrollArea for smooth scrolling */}
+                  <ScrollArea className="h-full w-full" type="hover">
+                    {/* Long screenshot image */}
+                    <img 
+                      src="/lovable-uploads/c690c09c-185c-431f-b9f0-9bdac44e788e.png" 
+                      alt="Business profile screenshot" 
+                      className="w-full"
+                    />
+                  </ScrollArea>
                 </div>
               </div>
               
