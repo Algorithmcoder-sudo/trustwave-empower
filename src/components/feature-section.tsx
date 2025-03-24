@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -47,7 +46,7 @@ const FeatureSection = () => {
       ]
     }
   ];
-
+  
   const labels = [
     { text: "+ $4,250 Salary", color: "text-saakh-blue", position: { left: "-290px", top: "100px" }, icon: "💵" },
     { text: "- $3.99 Coffee", color: "text-saakh-cyan", position: { right: "-290px", top: "80px" }, icon: "☕" },
@@ -130,7 +129,7 @@ const FeatureSection = () => {
   return (
     <section 
       ref={sectionRef} 
-      className="min-h-[200vh] relative overflow-hidden bg-black"
+      className="min-h-[100vh] relative overflow-hidden bg-black" // Reduced height since we're only showing the mobile part
     >
       <div className="absolute inset-0 floating-dots bg-black bg-opacity-90"></div>
       
@@ -311,205 +310,200 @@ const FeatureSection = () => {
             </div>
           </div>
         ) : (
-          // Desktop view layout with scroll effects and sticky behavior
-          <div className="h-[180vh] relative">
-            {/* Sticky container for the mobile device and labels */}
-            <div className="sticky top-0 h-screen w-full flex items-center justify-center">
-              {/* Mobile in center with labels */}
-              <div ref={mobileDeviceRef} className="relative">
-                <div className="relative rounded-[40px] overflow-hidden border-[8px] border-gray-800 bg-black shadow-2xl">
-                  <div className="absolute top-0 w-full h-6 bg-black z-20 flex justify-center items-center">
-                    <div className="w-20 h-4 bg-black rounded-b-lg"></div>
-                  </div>
-                  
-                  <div className="h-[600px] w-[300px] overflow-hidden relative">
-                    {/* Fixed content in the phone instead of scrolling */}
-                    <div className="bg-gradient-to-b from-black to-gray-900 h-[600px] w-full">
-                      <div className="p-4">
-                        <div className="flex items-center justify-between">
-                          <div className="text-white text-xl font-bold py-2">Dashboard</div>
-                          <div className="text-white opacity-50">⋮</div>
-                        </div>
-                        <div className="flex justify-between my-4">
-                          <div className="flex-1 bg-black/40 p-3 rounded-lg mr-2">
-                            <div className="text-gray-400 text-xs">Earnings</div>
-                            <div className="text-white font-bold">$ 85,222.00</div>
-                          </div>
-                          <div className="flex-1 bg-black/40 p-3 rounded-lg">
-                            <div className="text-gray-400 text-xs">Expenses</div>
-                            <div className="text-white font-bold">- $52,150.50</div>
-                          </div>
-                        </div>
-                        
-                        <div className="flex items-center justify-between mt-6 mb-2">
-                          <div className="flex items-center">
-                            <div className="w-3 h-3 rounded-full bg-saakh-blue mr-1"></div>
-                            <span className="text-xs text-gray-300">Earnings</span>
-                          </div>
-                          <div className="flex items-center ml-4">
-                            <div className="w-3 h-3 rounded-full bg-red-400 mr-1"></div>
-                            <span className="text-xs text-gray-300">Expenses</span>
-                          </div>
-                          <div className="flex items-center ml-auto">
-                            <span className="text-xs bg-black/30 text-gray-300 px-2 py-1 rounded">Year ▼</span>
-                          </div>
-                        </div>
-                        
-                        {/* Chart */}
-                        <div className="h-[180px] bg-black/20 rounded-lg my-4 flex items-end justify-between p-4">
-                          {[40, 60, 30, 20, 50, 70, 45].map((height, i) => (
-                            <div key={i} className="w-8 flex flex-col items-center">
-                              <div className="h-24 w-full flex flex-col-reverse">
-                                <div 
-                                  className="w-full bg-saakh-blue rounded-t" 
-                                  style={{height: `${height}%`}}
-                                ></div>
-                                <div 
-                                  className="w-full bg-red-400 rounded-t" 
-                                  style={{height: `${Math.min(100-height, 40)}%`}}
-                                ></div>
-                              </div>
-                              <div className="text-gray-400 text-xs mt-2">
-                                {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'][i]}
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                        
-                        {/* Transactions */}
-                        <div className="flex items-center justify-between">
-                          <div className="text-white text-lg font-bold py-2 mt-4">Transactions</div>
-                          <div className="text-saakh-blue text-xs">View All →</div>
-                        </div>
-                        
-                        {[
-                          {icon: "☕", name: "Coffee", category: "Restaurants", amount: "$3.99"},
-                          {icon: "🍔", name: "Fast Food", category: "Restaurants", amount: "$12.99"},
-                          {icon: "✈️", name: "Sunny Holidays", category: "Travel", amount: "$1,200.00"},
-                          {icon: "👔", name: "Clothes", category: "Shopping", amount: "$250.00"}
-                        ].map((tx, i) => (
-                          <div key={i} className="flex items-center justify-between p-3 border-b border-gray-800">
-                            <div className="flex items-center">
-                              <div className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center mr-3">
-                                {tx.icon}
-                              </div>
-                              <div>
-                                <div className="text-white">{tx.name}</div>
-                                <div className="text-gray-400 text-xs">{tx.category}</div>
-                              </div>
-                            </div>
-                            <div className="text-white">- {tx.amount}</div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
+          // Desktop view layout - now only showing the mobile with business profile content
+          <div className="h-[100vh] relative flex justify-center items-center py-20">
+            {/* Mobile device with scrollable content */}
+            <div ref={mobileDeviceRef} className="relative">
+              <div className="relative rounded-[40px] overflow-hidden border-[8px] border-gray-800 bg-white shadow-2xl">
+                <div className="absolute top-0 w-full h-6 bg-black z-20 flex justify-center items-center">
+                  <div className="w-20 h-4 bg-black rounded-b-lg"></div>
                 </div>
                 
-                {/* Floating labels around the phone - only visible in first phase */}
-                {scrollPhase === 0 && (
-                  <>
-                    {labels.map((label, index) => (
-                      <div 
-                        key={index}
-                        className={`absolute transition-all duration-500 ${
-                          visibleLabels.includes(index) ? 'opacity-100' : 'opacity-0'
-                        }`}
-                        style={{ 
-                          ...label.position,
-                          transform: `translateY(${visibleLabels.includes(index) ? '0' : '-10px'})`,
-                        }}
-                      >
-                        <div className="bg-black/40 backdrop-blur-lg border border-white/10 rounded-lg p-3 px-4 shadow-neon-blue flex items-center">
-                          <div className="w-8 h-8 rounded-full bg-black/40 flex items-center justify-center mr-3 text-xl">
-                            {label.icon}
-                          </div>
-                          <div className={`${label.color} text-sm`}>{label.text}</div>
+                <div className="h-[600px] w-[300px] overflow-y-auto relative bg-white">
+                  {/* Company Profile Content */}
+                  <div className="bg-white">
+                    {/* Header with back button and verified icon */}
+                    <div className="flex items-center justify-between p-4 border-b">
+                      <div className="flex items-center">
+                        <svg className="w-5 h-5 text-gray-600 mr-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                        <div className="text-xs text-gray-500">verified</div>
+                      </div>
+                      <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2z" />
+                      </svg>
+                    </div>
+                    
+                    {/* Company Profile */}
+                    <div className="p-4 flex items-start">
+                      <div className="w-14 h-14 rounded-full overflow-hidden bg-gray-200 mr-3">
+                        <img src="/lovable-uploads/606e2688-1f8c-488b-9f24-1940aae820f6.png" alt="Company logo" className="w-full h-full object-cover" />
+                      </div>
+                      <div>
+                        <h1 className="font-bold text-lg">R. K. INFRATEL LIMITED</h1>
+                        <p className="text-xs text-gray-500">Internet service provider |PUBLIC LIMITED</p>
+                        <p className="text-xs text-gray-500">Founded in 1993</p>
+                        <div className="flex items-center text-xs mt-2">
+                          <svg className="w-4 h-4 text-gray-600 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                          </svg>
+                          <span>Surat</span>
+                          <div className="h-3 border-l border-gray-300 mx-2"></div>
+                          <span>Rajaendra rachamalla sheth</span>
                         </div>
                       </div>
-                    ))}
-                  </>
-                )}
-                
-                {/* Glowing orb behind phone */}
-                <div className="absolute w-64 h-64 bg-saakh-blue/20 rounded-full filter blur-3xl top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-pulse-soft"></div>
-              </div>
-            </div>
-            
-            {/* Card 1 - Comes from bottom on the right side */}
-            <div 
-              className="absolute w-[400px] transition-all duration-700 ease-out"
-              style={{
-                opacity: (scrollPhase >= 1 || (scrollPhase === 0 && scrollProgress > 0.7)) ? 1 : 0,
-                right: '10%',
-                top: `calc(50vh - 200px + ${
-                  scrollPhase === 0 
-                    ? `${(1 - scrollProgress) * 50}vh` 
-                    : '0vh'
-                })`,
-                visibility: (scrollPhase === 0 && scrollProgress > 0.5) || scrollPhase >= 1 ? 'visible' : 'hidden',
-              }}
-            >
-              <div className="feature-card w-full p-8 bg-black/30 backdrop-blur-md border border-white/10 rounded-xl shadow-lg">
-                <div className="text-saakh-blue/80 text-sm mb-1">{featureCards[0].label}</div>
-                <h3 className="text-white text-4xl font-bold mb-3">
-                  Financial<br />Overview
-                </h3>
-                <p className="text-white/70 mb-6">{featureCards[0].description}</p>
-                <ul className="space-y-4">
-                  {featureCards[0].items.map((item, i) => (
-                    <li key={i} className="flex items-center">
-                      <div className="w-8 h-8 rounded-full bg-saakh-blue/20 flex items-center justify-center mr-3">
-                        <svg className="w-5 h-5 text-saakh-blue" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </div>
+                    
+                    {/* Tabs */}
+                    <div className="flex overflow-x-auto border-b text-xs text-gray-600 px-4">
+                      <div className="border-b-2 border-blue-500 px-4 py-2 text-blue-500 whitespace-nowrap">Business Summary</div>
+                      <div className="px-4 py-2 whitespace-nowrap">Compliance Risks</div>
+                      <div className="px-4 py-2 whitespace-nowrap">Defaults & Fraud</div>
+                    </div>
+                    
+                    {/* Business Summary Card */}
+                    <div className="p-4">
+                      <div className="flex items-center justify-between">
+                        <h2 className="font-bold text-lg">Business Summary</h2>
+                        <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
                         </svg>
                       </div>
-                      <span className="text-white/80 text-lg">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-            
-            {/* Card 2 - Comes from bottom on the left side */}
-            <div 
-              className="absolute w-[400px] transition-all duration-700 ease-out" 
-              style={{
-                opacity: (scrollPhase >= 1 && scrollProgress > 0.5) ? 1 : 0,
-                left: '10%',
-                top: `calc(50vh - 200px + ${
-                  scrollPhase < 1 || scrollProgress < 0.3
-                    ? '50vh' 
-                    : `${(1 - scrollProgress) * 80}vh`
-                })`,
-                visibility: (scrollPhase === 1 && scrollProgress > 0.3) ? 'visible' : 'hidden',
-              }}
-            >
-              <div className="feature-card w-full p-8 bg-black/30 backdrop-blur-md border border-white/10 rounded-xl shadow-lg">
-                <div className="text-saakh-blue/80 text-sm mb-1">{featureCards[1].label}</div>
-                <h3 className="text-white text-4xl font-bold mb-3">
-                  Financial<br />Insights
-                </h3>
-                <p className="text-white/70 mb-6">{featureCards[1].description}</p>
-                <ul className="space-y-4">
-                  {featureCards[1].items.map((item, i) => (
-                    <li key={i} className="flex items-center">
-                      <div className="w-8 h-8 rounded-full bg-saakh-blue/20 flex items-center justify-center mr-3">
-                        <svg className="w-5 h-5 text-saakh-blue" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      
+                      {/* Company Description */}
+                      <div className="mt-4">
+                        <h3 className="font-medium">Company Description</h3>
+                        <p className="text-xs text-gray-600 mt-1">
+                          Established and begun functioning in 1993 as R. K. Cable, 
+                          Net Det Ltd. which Presently is known as R.K. INFRATEL Ltd.
+                        </p>
+                      </div>
+                      
+                      {/* Ratings & Photos */}
+                      <div className="flex justify-between mt-4">
+                        <div>
+                          <div className="text-sm font-medium">Ratings</div>
+                          <div className="flex items-center mt-1">
+                            <div className="text-lg font-bold mr-1">3</div>
+                            <div className="flex">
+                              {[1, 2, 3].map(star => (
+                                <svg key={star} className="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                              ))}
+                              {[4, 5].map(star => (
+                                <svg key={star} className="w-4 h-4 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                              ))}
+                            </div>
+                            <div className="text-xs text-gray-500 ml-1">(based on feedback)</div>
+                          </div>
+                        </div>
+                        <div>
+                          <div className="text-sm font-medium">Photos</div>
+                          <div className="w-12 h-12 bg-gray-200 rounded-md mt-1 overflow-hidden">
+                            <img src="/lovable-uploads/606e2688-1f8c-488b-9f24-1940aae820f6.png" className="w-full h-full object-cover" alt="Company" />
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Address */}
+                      <div className="mt-4">
+                        <h3 className="font-medium">Address:</h3>
+                        <p className="text-xs text-gray-600 mt-1">
+                          10th floor, No.24, Sundar Chambers, Ashram Path, 
+                          Ashram Road, Gujarat - 395000
+                        </p>
+                        <div className="flex mt-2 space-x-2">
+                          <button className="bg-blue-100 text-blue-500 text-xs py-1 px-3 rounded-full">Directions</button>
+                          <button className="bg-blue-100 text-blue-500 text-xs py-1 px-3 rounded-full">Website</button>
+                          <button className="bg-blue-500 text-white text-xs py-1 px-3 rounded-full flex items-center">
+                            <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                            </svg>
+                            Contact
+                          </button>
+                        </div>
+                      </div>
+                      
+                      {/* Action buttons */}
+                      <div className="flex justify-between mt-4">
+                        <button className="bg-blue-100 text-blue-500 text-xs py-1 px-3 rounded-full">ratings</button>
+                        <button className="bg-blue-100 text-blue-500 text-xs py-1 px-3 rounded-full">reviews</button>
+                        <button className="bg-blue-100 text-blue-500 text-xs py-1 px-3 rounded-full">photos</button>
+                      </div>
+                    </div>
+                    
+                    {/* Compliance Risks Card */}
+                    <div className="p-4 border-t mt-2">
+                      <div className="flex items-center justify-between">
+                        <h2 className="font-bold text-lg">Compliance Risks</h2>
+                        <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
                         </svg>
                       </div>
-                      <span className="text-white/80 text-lg">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-    </section>
-  );
-};
-
-export default FeatureSection;
+                      
+                      <div className="flex items-center mt-4">
+                        <div className="mr-6">
+                          <div className="text-sm font-medium">Active</div>
+                          <div className="text-sm font-medium">Non-Compliances</div>
+                        </div>
+                        <div className="flex items-baseline">
+                          <span className="text-3xl font-bold text-red-500">7</span>
+                          <span className="text-xs text-gray-500">/95</span>
+                        </div>
+                      </div>
+                      
+                      {/* Non-compliance tags */}
+                      <div className="mt-4">
+                        <div className="text-xs text-gray-500 mb-2">Type of Non-Compliances</div>
+                        <div className="flex flex-wrap gap-2">
+                          <span className="bg-red-500 text-white text-xs py-1 px-3 rounded-full">SEVERE (1)</span>
+                          <span className="bg-orange-500 text-white text-xs py-1 px-3 rounded-full">HIGH (2)</span>
+                          <span className="bg-yellow-400 text-white text-xs py-1 px-3 rounded-full">PF Deduction Default</span>
+                          <span className="bg-yellow-400 text-white text-xs py-1 px-3 rounded-full">Staff PF</span>
+                          <span className="bg-blue-400 text-white text-xs py-1 px-3 rounded-full">IRDA/Structural</span>
+                          <span className="bg-blue-400 text-white text-xs py-1 px-3 rounded-full">GST Cancelled</span>
+                        </div>
+                        <div className="text-xs text-gray-500 mt-1 text-right">Tap to see details</div>
+                      </div>
+                    </div>
+                    
+                    {/* Defaults & Frauds Card */}
+                    <div className="p-4 border-t mt-2">
+                      <div className="flex items-center justify-between">
+                        <h2 className="font-bold text-lg">Defaults & Frauds</h2>
+                        <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                      </div>
+                      
+                      <div className="mt-4">
+                        <div className="text-sm font-medium mb-2">ACTIVE RISKS (10)</div>
+                        <div className="flex flex-wrap gap-2">
+                          <span className="bg-red-500 text-white text-xs py-1 px-3 rounded-full">PF Deduction Default</span>
+                          <span className="bg-red-500 text-white text-xs py-1 px-3 rounded-full">Staff PF</span>
+                          <span className="bg-red-400 text-white text-xs py-1 px-3 rounded-full">IRDA/Structural</span>
+                        </div>
+                      </div>
+                      
+                      <div className="mt-4">
+                        <div className="text-sm font-medium mb-2">PASSED CHECKS (10)</div>
+                        <div className="flex flex-wrap gap-2">
+                          <span className="bg-green-500 text-white text-xs py-1 px-3 rounded-full">GST Transaction History</span>
+                          <span className="bg-green-500 text-white text-xs py-1 px-3 rounded-full">GST Black Listed</span>
+                          <span className="bg-green-500 text-white text-xs py-1 px-3 rounded-full">RBI Defaulter List</span>
+                          <span className="bg-green-500 text-white text-xs py-1 px-3 rounded-full">TDS Default Default</span>
+                          <span className="bg-green-500 text-white text-xs py-1 px-3 rounded-full">CIBIL Default</span>
+                          <span className="bg-green-500 text-white text-xs py-1 px-3 rounded-full">GST Fraud</span>
+                          <span className="bg-green-500 text-white text-xs py-1 px-3 rounded-full">Bank Auction</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Business Reputation */}
+                    <div className="p-4 border-t mt-2">
+                      <h2 className="
