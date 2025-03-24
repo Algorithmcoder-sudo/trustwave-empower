@@ -5,16 +5,64 @@
 
 @layer base {
   :root {
-    --background: 230 35% 7%;
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
 
-    --card: 230 35% 7%;
+    --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 230 35% 7%;
+    --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 217 91.2% 59.8%;
+    --primary: 210 40% 98%;
     --primary-foreground: 222.2 47.4% 11.2%;
 
     --secondary: 217.2 32.6% 17.5%;
@@ -32,7 +80,14 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
-    --radius: 0.75rem;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
 
@@ -42,131 +97,65 @@
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
-    font-feature-settings: "ss01", "ss02", "cv01", "cv02", "cv03";
+    @apply bg-background text-foreground;
     background-color: #050816;
   }
+}
 
-  html {
-    @apply scroll-smooth;
+/* Custom styles for the floating dots background */
+.floating-dots {
+  background-image: radial-gradient(rgba(74, 144, 226, 0.15) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: drift 15s linear infinite;
+}
+
+@keyframes drift {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 50px 50px;
   }
 }
 
-@layer utilities {
-  .scrollbar-none {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  
-  .scrollbar-none::-webkit-scrollbar {
-    display: none;
-  }
+/* Shadow glow effect for cards */
+.feature-card {
+  transition: all 0.3s ease;
+}
 
-  .glass-morphism {
-    @apply backdrop-blur-xl bg-white/5 border border-white/10 shadow-[0_4px_12px_-2px_rgba(0,0,0,0.3)];
-  }
-  
-  .text-shimmer {
-    @apply bg-shimmer-gradient bg-[length:200%_100%] bg-clip-text text-transparent font-bold animate-shimmer;
-  }
+.feature-card:hover {
+  box-shadow: 0 0 25px rgba(74, 144, 226, 0.2);
+  transform: translateY(-5px);
+}
 
-  .text-outline {
-    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+/* Custom animations for fading in elements */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-
-  .star {
-    @apply absolute w-1 h-1 rounded-full bg-white/80 pointer-events-none;
-  }
-
-  .star-animated {
-    animation: star-fall 3s linear forwards;
-  }
-
-  .text-balance {
-    text-wrap: balance;
-  }
-
-  .feature-card {
-    @apply relative p-6 rounded-2xl overflow-hidden border border-white/10 backdrop-blur-sm transition-all duration-300;
-    background: rgba(8, 43, 110, 0.1);
-  }
-
-  .feature-card:hover {
-    @apply shadow-neon-blue;
-    background: rgba(8, 43, 110, 0.2);
-  }
-
-  .feature-card::before {
-    content: "";
-    @apply absolute inset-0 bg-gradient-to-r from-saakh-blue/20 to-transparent opacity-0 transition-opacity duration-300;
-  }
-
-  .feature-card:hover::before {
-    @apply opacity-100;
-  }
-
-  .source-item {
-    @apply flex items-center justify-center w-auto h-12 px-4 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full mx-2 shrink-0;
-  }
-
-  .testimonial-card {
-    @apply p-6 rounded-2xl border border-white/10 backdrop-blur-sm bg-white/5 transition-all duration-300;
-  }
-
-  .testimonial-card:hover {
-    @apply shadow-neon-blue bg-saakh-blue-dark/20;
-  }
-
-  .orbit {
-    @apply absolute border border-white/10 rounded-full;
-  }
-
-  .floating-dots::before {
-    content: "";
-    @apply absolute w-full h-full pointer-events-none;
-    background-image: radial-gradient(circle, rgba(1, 119, 251, 0.3) 1px, transparent 1px);
-    background-size: 30px 30px;
-    opacity: 0.3;
-  }
-
-  .gradient-blue {
-    @apply bg-gradient-to-r from-saakh-blue to-saakh-blue-light;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-/* Custom Marquee Animation */
-.marquee-container {
-  @apply flex overflow-hidden whitespace-nowrap;
+.fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
 }
 
-.marquee-content {
-  @apply flex whitespace-nowrap;
-  animation: marquee 30s linear infinite;
+/* Pulse animation for the glowing orb */
+@keyframes pulse-soft {
+  0%, 100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.05);
+  }
 }
 
-.marquee-content-reverse {
-  @apply flex whitespace-nowrap;
-  animation: marquee-reverse 30s linear infinite;
-}
-
-@keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-100%); }
-}
-
-@keyframes marquee-reverse {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(0); }
-}
-
-.parallax-container {
-  overflow-x: hidden;
-  position: relative;
-  perspective: 1000px;
-}
-
-@keyframes float {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0); }
+.animate-pulse-soft {
+  animation: pulse-soft 3s ease-in-out infinite;
 }
