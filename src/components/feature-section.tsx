@@ -129,7 +129,7 @@ const FeatureSection = () => {
   return (
     <section 
       ref={sectionRef} 
-      className="min-h-[100vh] relative overflow-hidden bg-black" // Reduced height since we're only showing the mobile part
+      className="min-h-[100vh] relative overflow-hidden bg-black"
     >
       <div className="absolute inset-0 floating-dots bg-black bg-opacity-90"></div>
       
@@ -314,7 +314,7 @@ const FeatureSection = () => {
           <div className="h-[100vh] relative flex justify-center items-center py-20">
             {/* Mobile device with scrollable content */}
             <div ref={mobileDeviceRef} className="relative">
-              <div className="relative rounded-[40px] overflow-hidden border-[8px] border-gray-800 bg-white shadow-2xl">
+              <div className="relative rounded-[40px] overflow-hidden border-[8px] border-gray-800 bg-black shadow-2xl">
                 <div className="absolute top-0 w-full h-6 bg-black z-20 flex justify-center items-center">
                   <div className="w-20 h-4 bg-black rounded-b-lg"></div>
                 </div>
@@ -506,4 +506,89 @@ const FeatureSection = () => {
                     
                     {/* Business Reputation */}
                     <div className="p-4 border-t mt-2">
-                      <h2 className="
+                      <h2 className="font-bold text-lg mb-4">Business Reputation</h2>
+                      
+                      <div className="space-y-4">
+                        <div className="flex justify-between">
+                          <div className="text-sm font-medium">Overall Score</div>
+                          <div className="text-sm font-medium text-blue-500">8.5/10</div>
+                        </div>
+                        
+                        <div className="flex justify-between">
+                          <div className="text-sm font-medium">Credit Score</div>
+                          <div className="text-sm font-medium text-blue-500">745</div>
+                        </div>
+                        
+                        <div className="flex justify-between">
+                          <div className="text-sm font-medium">User Trust</div>
+                          <div className="text-sm font-medium text-blue-500">High</div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Key Persons */}
+                    <div className="p-4 border-t mt-2">
+                      <h2 className="font-bold text-lg mb-4">Key Persons</h2>
+                      
+                      <div className="space-y-4">
+                        <div className="flex items-center">
+                          <div className="w-10 h-10 bg-gray-200 rounded-full mr-3 overflow-hidden">
+                            <div className="w-full h-full flex items-center justify-center bg-blue-100 text-blue-500 font-bold">
+                              RR
+                            </div>
+                          </div>
+                          <div>
+                            <div className="text-sm font-medium">Rajendra Rachamalla</div>
+                            <div className="text-xs text-gray-500">Director | Since 1993</div>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-center">
+                          <div className="w-10 h-10 bg-gray-200 rounded-full mr-3 overflow-hidden">
+                            <div className="w-full h-full flex items-center justify-center bg-green-100 text-green-500 font-bold">
+                              SK
+                            </div>
+                          </div>
+                          <div>
+                            <div className="text-sm font-medium">Sanjay Kumar</div>
+                            <div className="text-xs text-gray-500">CFO | Since 2005</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Floating labels around the phone */}
+              {labels.map((label, index) => (
+                <div 
+                  key={index}
+                  className={`absolute transition-all duration-500 ${
+                    visibleLabels.includes(index) ? 'opacity-100' : 'opacity-0'
+                  }`}
+                  style={{ 
+                    ...label.position,
+                    transform: `translateY(${visibleLabels.includes(index) ? '0' : '-10px'})`,
+                  }}
+                >
+                  <div className="bg-black/40 backdrop-blur-lg border border-white/10 rounded-lg p-3 px-4 shadow-neon-blue flex items-center">
+                    <div className="w-8 h-8 rounded-full bg-black/40 flex items-center justify-center mr-3 text-xl">
+                      {label.icon}
+                    </div>
+                    <div className={`${label.color} text-sm`}>{label.text}</div>
+                  </div>
+                </div>
+              ))}
+              
+              {/* Glowing orb behind phone */}
+              <div className="absolute w-64 h-64 bg-saakh-blue/20 rounded-full filter blur-3xl top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-pulse-soft"></div>
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+};
+
+export default FeatureSection;
