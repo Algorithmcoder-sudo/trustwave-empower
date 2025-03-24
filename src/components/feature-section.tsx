@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -323,9 +324,9 @@ const FeatureSection = () => {
                 <div className="h-[600px] w-[300px] overflow-hidden relative bg-white">
                   {/* Use ScrollArea for smooth scrolling */}
                   <ScrollArea className="h-full w-full" type="hover">
-                    {/* Long screenshot image */}
+                    {/* Long screenshot image - using the new uploaded image */}
                     <img 
-                      src="/lovable-uploads/c690c09c-185c-431f-b9f0-9bdac44e788e.png" 
+                      src="/lovable-uploads/797f4b1e-979c-47b4-957b-216bc05e26f3.png" 
                       alt="Business profile screenshot" 
                       className="w-full"
                     />
