@@ -1,10 +1,10 @@
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Globe } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 
 const LandingSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -130,7 +130,6 @@ const LandingSection = () => {
         <div 
           ref={searchRef} 
           className="mb-14 transition-all duration-700 w-full max-w-2xl"
-          style={{ perspective: '1000px' }}
         >
           <div className="cosmic-search-container">
             <div id="search-container">
@@ -202,16 +201,16 @@ const LandingSection = () => {
           className="flex flex-col sm:flex-row gap-6 transition-all duration-700 mt-auto fixed bottom-10"
         >
           {/* Download Now Button with QR Code on hover */}
-          <Popover>
-            <PopoverTrigger asChild>
+          <HoverCard openDelay={0} closeDelay={200}>
+            <HoverCardTrigger asChild>
               <Button
-                className="px-6 py-2.5 bg-saakh-blue hover:bg-saakh-blue-light text-white font-medium rounded-xl text-base h-auto"
+                className="px-5 py-2 bg-saakh-blue hover:bg-saakh-blue-light text-white font-medium rounded-xl text-base h-auto"
                 onClick={handleDownloadClick}
               >
                 Download Now
               </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="center">
+            </HoverCardTrigger>
+            <HoverCardContent className="w-auto p-0">
               <div className="p-4 bg-white rounded-lg">
                 <p className="text-black font-medium mb-2 text-center">Scan to download</p>
                 <div className="w-48 h-48 bg-white p-2 rounded-lg flex items-center justify-center">
@@ -221,15 +220,15 @@ const LandingSection = () => {
                   </div>
                 </div>
               </div>
-            </PopoverContent>
-          </Popover>
+            </HoverCardContent>
+          </HoverCard>
           
           {/* Book a Demo Button */}
           <Popover>
             <PopoverTrigger asChild>
               <Button 
                 variant="outline" 
-                className="px-6 py-2.5 border-saakh-blue hover:bg-saakh-blue/10 text-white font-medium rounded-xl text-base h-auto"
+                className="px-5 py-2 border-saakh-blue hover:bg-saakh-blue/10 text-white font-medium rounded-xl text-base h-auto"
               >
                 Book a Demo
               </Button>
