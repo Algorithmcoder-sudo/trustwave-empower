@@ -230,6 +230,7 @@
     position: relative;
     transform-style: preserve-3d;
     transition: transform 0.6s ease;
+    width: 100%;
   }
 
   .cosmic-search-container:hover {
@@ -241,8 +242,6 @@
   .starfield,
   .nebula {
     max-height: 70px;
-    max-width: 314px;
-    height: 100%;
     width: 100%;
     position: absolute;
     overflow: hidden;
@@ -254,7 +253,7 @@
   .input {
     background-color: #05071b;
     border: none;
-    width: 301px;
+    width: 100%;
     height: 56px;
     border-radius: 10px;
     color: #a9c7ff;
@@ -267,6 +266,7 @@
     align-items: center;
     justify-content: center;
     position: relative;
+    width: 100%;
   }
 
   .input::placeholder {
@@ -306,6 +306,226 @@
 
   #main:hover > #cosmic-glow {
     opacity: 0;
+  }
+
+  #main {
+    position: relative;
+    width: 100%;
+  }
+
+  .stardust {
+    max-height: 63px;
+    border-radius: 10px;
+    filter: blur(2px);
+    width: 100%;
+  }
+
+  .stardust::before {
+    content: "";
+    z-index: -2;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(83deg);
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    filter: brightness(1.4);
+    background-image: conic-gradient(
+      rgba(0, 0, 0, 0) 0%,
+      #4d6dff,
+      rgba(0, 0, 0, 0) 8%,
+      rgba(0, 0, 0, 0) 50%,
+      #6e8cff,
+      rgba(0, 0, 0, 0) 58%
+    );
+    transition: all 2s;
+  }
+
+  .cosmic-ring {
+    max-height: 59px;
+    border-radius: 11px;
+    filter: blur(0.5px);
+    width: 100%;
+  }
+
+  .cosmic-ring::before {
+    content: "";
+    z-index: -2;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(70deg);
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    filter: brightness(1.3);
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    background-image: conic-gradient(
+      #05071b,
+      #4d6dff 5%,
+      #05071b 14%,
+      #05071b 50%,
+      #6e8cff 60%,
+      #05071b 64%
+    );
+    transition: all 2s;
+  }
+
+  .starfield {
+    max-height: 65px;
+    width: 100%;
+  }
+
+  .starfield::before {
+    content: "";
+    z-index: -2;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(82deg);
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    background-image: conic-gradient(
+      rgba(0, 0, 0, 0),
+      #1c2452,
+      rgba(0, 0, 0, 0) 10%,
+      rgba(0, 0, 0, 0) 50%,
+      #2a3875,
+      rgba(0, 0, 0, 0) 60%
+    );
+    transition: all 2s;
+  }
+
+  #search-container:hover > .starfield::before {
+    transform: translate(-50%, -50%) rotate(-98deg);
+  }
+
+  #search-container:hover > .nebula::before {
+    transform: translate(-50%, -50%) rotate(-120deg);
+  }
+
+  #search-container:hover > .stardust::before {
+    transform: translate(-50%, -50%) rotate(-97deg);
+  }
+
+  #search-container:hover > .cosmic-ring::before {
+    transform: translate(-50%, -50%) rotate(-110deg);
+  }
+
+  #search-container:focus-within > .starfield::before {
+    transform: translate(-50%, -50%) rotate(442deg);
+    transition: all 4s;
+  }
+
+  #search-container:focus-within > .nebula::before {
+    transform: translate(-50%, -50%) rotate(420deg);
+    transition: all 4s;
+  }
+
+  #search-container:focus-within > .stardust::before {
+    transform: translate(-50%, -50%) rotate(443deg);
+    transition: all 4s;
+  }
+
+  #search-container:focus-within > .cosmic-ring::before {
+    transform: translate(-50%, -50%) rotate(430deg);
+    transition: all 4s;
+  }
+
+  .nebula {
+    overflow: hidden;
+    filter: blur(30px);
+    opacity: 0.4;
+    max-height: 130px;
+    width: 100%;
+  }
+
+  .nebula:before {
+    content: "";
+    z-index: -2;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(60deg);
+    position: absolute;
+    width: 999px;
+    height: 999px;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    background-image: conic-gradient(
+      #000,
+      #4d6dff 5%,
+      #000 38%,
+      #000 50%,
+      #6e8cff 60%,
+      #000 87%
+    );
+    transition: all 2s;
+  }
+
+  #wormhole-icon {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    max-height: 40px;
+    max-width: 38px;
+    height: 100%;
+    width: 40px;
+    isolation: isolate;
+    overflow: hidden;
+    border-radius: 10px;
+    background: linear-gradient(180deg, #1c2452, #05071b, #2a3875);
+    border: 1px solid transparent;
+  }
+
+  .wormhole-border {
+    height: 42px;
+    width: 40px;
+    position: absolute;
+    overflow: hidden;
+    top: 7px;
+    right: 7px;
+    border-radius: 10px;
+  }
+
+  .wormhole-border::before {
+    content: "";
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(90deg);
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    filter: brightness(1.35);
+    background-image: conic-gradient(
+      rgba(0, 0, 0, 0),
+      #4d6dff,
+      rgba(0, 0, 0, 0) 50%,
+      rgba(0, 0, 0, 0) 50%,
+      #6e8cff,
+      rgba(0, 0, 0, 0) 100%
+    );
+    animation: rotate 4s linear infinite;
+  }
+
+  #search-icon {
+    position: absolute;
+    left: 20px;
+    top: 15px;
   }
 
   @keyframes twinkle {

@@ -91,7 +91,7 @@ const LandingSection = () => {
   
   return (
     <section className="pt-20 pb-16 relative overflow-hidden min-h-[100vh] flex items-center justify-center">
-      {/* Removed the floating-dots background */}
+      {/* Background gradient */}
       <div className="absolute top-0 left-0 right-0 h-96 bg-gradient-radial from-saakh-blue-dark/30 to-transparent"></div>
       
       {/* Loader screen that fades out */}
@@ -126,10 +126,10 @@ const LandingSection = () => {
           Get <span className="text-yellow-400 font-bold">350+</span> data points on any business instantly from every possible source
         </p>
         
-        {/* Cosmic Search Bar */}
+        {/* Enhanced Cosmic Search Bar */}
         <div 
           ref={searchRef} 
-          className="mb-14 transition-all duration-700"
+          className="mb-14 transition-all duration-700 w-full max-w-2xl"
           style={{ perspective: '1000px' }}
         >
           <div className="cosmic-search-container">
@@ -201,12 +201,11 @@ const LandingSection = () => {
           ref={buttonsRef}
           className="flex flex-col sm:flex-row gap-6 transition-all duration-700 mt-auto fixed bottom-10"
         >
-          {/* Download Now Button with QR Code */}
+          {/* Download Now Button with QR Code on hover */}
           <Popover>
             <PopoverTrigger asChild>
               <Button
-                className="px-6 py-4 bg-saakh-blue hover:bg-saakh-blue-light text-white font-medium rounded-xl text-base h-auto"
-                onClick={handleDownloadClick}
+                className="px-6 py-2.5 bg-saakh-blue hover:bg-saakh-blue-light text-white font-medium rounded-xl text-base h-auto"
               >
                 Download Now
               </Button>
@@ -220,6 +219,12 @@ const LandingSection = () => {
                     <p className="text-xs text-gray-500 text-center">Your QR Code Here</p>
                   </div>
                 </div>
+                <Button 
+                  className="w-full mt-3 bg-saakh-blue hover:bg-saakh-blue-light text-white"
+                  onClick={handleDownloadClick}
+                >
+                  Download Now
+                </Button>
               </div>
             </PopoverContent>
           </Popover>
@@ -229,7 +234,7 @@ const LandingSection = () => {
             <PopoverTrigger asChild>
               <Button 
                 variant="outline" 
-                className="px-6 py-4 border-saakh-blue hover:bg-saakh-blue/10 text-white font-medium rounded-xl text-base h-auto"
+                className="px-6 py-2.5 border-saakh-blue hover:bg-saakh-blue/10 text-white font-medium rounded-xl text-base h-auto"
               >
                 Book a Demo
               </Button>
