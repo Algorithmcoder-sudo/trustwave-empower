@@ -206,6 +206,7 @@ const LandingSection = () => {
             <PopoverTrigger asChild>
               <Button
                 className="px-6 py-2.5 bg-saakh-blue hover:bg-saakh-blue-light text-white font-medium rounded-xl text-base h-auto"
+                onClick={handleDownloadClick}
               >
                 Download Now
               </Button>
@@ -219,12 +220,6 @@ const LandingSection = () => {
                     <p className="text-xs text-gray-500 text-center">Your QR Code Here</p>
                   </div>
                 </div>
-                <Button 
-                  className="w-full mt-3 bg-saakh-blue hover:bg-saakh-blue-light text-white"
-                  onClick={handleDownloadClick}
-                >
-                  Download Now
-                </Button>
               </div>
             </PopoverContent>
           </Popover>
