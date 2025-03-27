@@ -14,6 +14,7 @@ import TestimonialsSection from '@/components/testimonials-section';
 import FAQSection from '@/components/faq-section';
 import ContactSection from '@/components/contact-section';
 import Footer from '@/components/footer';
+import LandingSection from '@/components/landing-section';
 
 const Index = () => {
   // Smooth scroll implementation
@@ -43,6 +44,7 @@ const Index = () => {
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <AnimatedBackground />
       <Navbar />
+      <LandingSection />
       <HeroSection />
       <FeatureSection />
       <WhatWeSolve />
