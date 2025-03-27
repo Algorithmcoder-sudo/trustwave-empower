@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -87,6 +86,11 @@ export default {
 					"0%": { transform: "scale(0.95)", opacity: "0" },
 					"100%": { transform: "scale(1)", opacity: "1" }
 				},
+				"zoom-out": {
+					"0%": { transform: "scale(1.5)", opacity: "0" },
+					"50%": { transform: "scale(1.2)", opacity: "0.5" },
+					"100%": { transform: "scale(1)", opacity: "1" }
+				},
 				"slide-in-right": {
 					"0%": { transform: "translateX(100%)" },
 					"100%": { transform: "translateX(0)" }
@@ -153,6 +157,7 @@ export default {
 				"accordion-up": "accordion-up 0.2s ease-out",
 				"fade-in": "fade-in 0.5s ease-out forwards",
 				"scale-in": "scale-in 0.5s ease-out forwards",
+				"zoom-out": "zoom-out 1s ease-out forwards",
 				"slide-in-right": "slide-in-right 0.5s ease-out forwards",
 				"slide-in-left": "slide-in-left 0.5s ease-out forwards",
 				"slide-in-top": "slide-in-top 0.5s ease-out forwards",

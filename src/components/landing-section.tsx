@@ -91,19 +91,20 @@ const LandingSection = () => {
   
   return (
     <section className="pt-20 pb-16 relative overflow-hidden min-h-[100vh] flex items-center justify-center">
-      {/* Background elements - similar to hero section */}
-      <div className="absolute inset-0 floating-dots"></div>
+      {/* Removed the floating-dots background */}
       <div className="absolute top-0 left-0 right-0 h-96 bg-gradient-radial from-saakh-blue-dark/30 to-transparent"></div>
       
       {/* Loader screen that fades out */}
       <div 
         className={`absolute inset-0 z-40 bg-background flex items-center justify-center transition-opacity duration-700 ${loaded ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
       >
-        <div className="relative w-24 h-24">
+        <div className="relative w-24 h-24 animate-zoom-out">
           <div className="absolute inset-0 border-4 border-saakh-blue/20 rounded-full animate-spin"></div>
           <div className="absolute inset-0 border-t-4 border-saakh-blue rounded-full animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1s' }}></div>
           <div className="absolute inset-0 flex items-center justify-center">
-            <Globe className="text-saakh-blue animate-pulse" />
+            <div className="bg-saakh-blue rounded-full p-2 flex items-center justify-center">
+              <span className="text-xl font-bold text-white">S</span>
+            </div>
           </div>
         </div>
       </div>
@@ -132,7 +133,6 @@ const LandingSection = () => {
           style={{ perspective: '1000px' }}
         >
           <div className="cosmic-search-container">
-            <div className="galaxy"></div>
             <div id="search-container">
               <div className="nebula"></div>
               <div className="starfield"></div>
@@ -196,16 +196,16 @@ const LandingSection = () => {
           </div>
         </div>
 
-        {/* Buttons */}
+        {/* Buttons - positioned at the bottom */}
         <div 
           ref={buttonsRef}
-          className="flex flex-col sm:flex-row gap-6 transition-all duration-700"
+          className="flex flex-col sm:flex-row gap-6 transition-all duration-700 mt-auto fixed bottom-10"
         >
           {/* Download Now Button with QR Code */}
           <Popover>
             <PopoverTrigger asChild>
               <Button
-                className="px-8 py-6 bg-saakh-blue hover:bg-saakh-blue-light text-white font-medium rounded-xl text-lg h-auto"
+                className="px-6 py-4 bg-saakh-blue hover:bg-saakh-blue-light text-white font-medium rounded-xl text-base h-auto"
                 onClick={handleDownloadClick}
               >
                 Download Now
@@ -229,7 +229,7 @@ const LandingSection = () => {
             <PopoverTrigger asChild>
               <Button 
                 variant="outline" 
-                className="px-8 py-6 border-saakh-blue hover:bg-saakh-blue/10 text-white font-medium rounded-xl text-lg h-auto"
+                className="px-6 py-4 border-saakh-blue hover:bg-saakh-blue/10 text-white font-medium rounded-xl text-base h-auto"
               >
                 Book a Demo
               </Button>
