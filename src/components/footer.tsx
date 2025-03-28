@@ -1,5 +1,5 @@
 
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
@@ -8,30 +8,6 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 
 const Footer = () => {
   const [date, setDate] = React.useState<Date | undefined>(undefined);
-  const parallaxRef = useRef<HTMLDivElement>(null);
-  
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!parallaxRef.current) return;
-      
-      const { clientX, clientY } = e;
-      const centerX = window.innerWidth / 2;
-      const centerY = window.innerHeight / 2;
-      
-      // Calculate how far the mouse is from the center as a percentage
-      const moveX = (clientX - centerX) / centerX * 10; // reduce movement intensity
-      const moveY = (clientY - centerY) / centerY * 10;
-      
-      // Apply transformation
-      parallaxRef.current.style.transform = `translate3d(${moveX}px, ${moveY}px, 0) rotateX(${moveY * -0.2}deg) rotateY(${moveX * 0.2}deg)`;
-    };
-    
-    window.addEventListener('mousemove', handleMouseMove);
-    
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, []);
 
   // Function to detect device type for app store redirects
   const handleDownloadClick = () => {
@@ -54,14 +30,18 @@ const Footer = () => {
       <div className="absolute inset-0 floating-dots opacity-30"></div>
       
       <div className="container mx-auto px-6 relative z-10">
-        <div ref={parallaxRef} className="flex flex-col items-center justify-center text-center mb-10 transition-transform duration-200 ease-out" style={{ transformStyle: 'preserve-3d' }}>
-          <div className="w-16 h-16 rounded-full bg-saakh-blue/20 flex items-center justify-center mb-4" style={{ transform: 'translateZ(20px)' }}>
+        <div className="flex flex-col items-center justify-center text-center mb-10">
+          <div className="w-16 h-16 rounded-full bg-saakh-blue/20 flex items-center justify-center mb-4">
             <span className="text-2xl font-bold text-saakh-blue">S</span>
           </div>
           
-          <h3 className="text-2xl font-bold text-white mb-6" style={{ transform: 'translateZ(30px)' }}>Saakh</h3>
+          <h3 className="text-2xl font-bold text-white mb-2">Saakh</h3>
+          <p className="text-white/70 max-w-md mx-auto">
+            Having workflow issues? We've got solutions.<br />
+            Join over 1000+ businesses already optimizing their operations with Saakh.
+          </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 mt-2" style={{ transform: 'translateZ(40px)' }}>
+          <div className="flex flex-col sm:flex-row gap-4 mt-8">
             <HoverCard openDelay={0} closeDelay={200}>
               <HoverCardTrigger asChild>
                 <Button
