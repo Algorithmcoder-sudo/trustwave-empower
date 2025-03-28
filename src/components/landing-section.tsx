@@ -5,6 +5,8 @@ import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
+import MarqueeSection from './MarqueeSection';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const LandingSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -14,6 +16,25 @@ const LandingSection = () => {
   const buttonsRef = useRef<HTMLDivElement>(null);
   const [date, setDate] = React.useState<Date | undefined>(undefined);
   const [loaded, setLoaded] = React.useState(false);
+  const isMobile = useIsMobile();
+  
+  // Source data for marquee
+  const sources = [
+    "GST", "UDYAM", "PAN", "TAN", "IEC", "EPF", 
+    "MCA", "RBI", "SEBI", "BSE", "NSE", "LEI", "IBBI",
+    "BIFR", "SFIO", "DIN", "TDS", "Website", "Google",
+    "IndiaMART", "JustDial", "TradeIndia", "LinkedIn", "Facebook"
+  ];
+  
+  // Create source items for marquee
+  const sourceItems = sources.map((source, index) => (
+    <div 
+      key={index} 
+      className="source-item opacity-5 text-white whitespace-nowrap"
+    >
+      {source}
+    </div>
+  ));
   
   useEffect(() => {
     // Initial loading animation
@@ -93,6 +114,45 @@ const LandingSection = () => {
     <section className="pt-20 pb-16 relative overflow-hidden min-h-[100vh] flex items-center justify-center">
       {/* Background gradient */}
       <div className="absolute top-0 left-0 right-0 h-96 bg-gradient-radial from-saakh-blue-dark/30 to-transparent"></div>
+      
+      {/* Background marquee with low opacity */}
+      <div className="absolute inset-0 z-0 opacity-10 pointer-events-none overflow-hidden">
+        <div className="absolute top-[10%] w-full">
+          <MarqueeSection 
+            items={sourceItems} 
+            direction="left" 
+            speed="slow" 
+            pauseOnHover={false}
+          />
+        </div>
+        
+        <div className="absolute top-[30%] w-full">
+          <MarqueeSection 
+            items={sourceItems} 
+            direction="right" 
+            speed="slow" 
+            pauseOnHover={false}
+          />
+        </div>
+        
+        <div className="absolute top-[50%] w-full">
+          <MarqueeSection 
+            items={sourceItems} 
+            direction="left" 
+            speed="normal" 
+            pauseOnHover={false}
+          />
+        </div>
+        
+        <div className="absolute top-[70%] w-full">
+          <MarqueeSection 
+            items={sourceItems} 
+            direction="right" 
+            speed="slow" 
+            pauseOnHover={false}
+          />
+        </div>
+      </div>
       
       {/* Loader screen that fades out */}
       <div 
