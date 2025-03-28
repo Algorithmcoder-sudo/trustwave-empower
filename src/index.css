@@ -226,6 +226,20 @@
     animation: pulse-soft 3s ease-in-out infinite;
   }
 
+  .galaxy {
+    height: 800px;
+    width: 800px;
+    background-image: radial-gradient(#ffffff 1px, transparent 1px),
+      radial-gradient(#ffffff 1px, transparent 1px);
+    background-size: 50px 50px;
+    background-position:
+      0 0,
+      25px 25px;
+    position: absolute;
+    z-index: -1;
+    animation: twinkle 5s infinite;
+  }
+
   .cosmic-search-container {
     position: relative;
     transform-style: preserve-3d;
