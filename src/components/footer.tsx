@@ -1,7 +1,30 @@
 
 import React from 'react';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Calendar } from '@/components/ui/calendar';
+import { Button } from '@/components/ui/button';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 const Footer = () => {
+  const [date, setDate] = React.useState<Date | undefined>(undefined);
+
+  // Function to detect device type for app store redirects
+  const handleDownloadClick = () => {
+    const userAgent = navigator.userAgent || navigator.vendor;
+    
+    if (/android/i.test(userAgent)) {
+      // Android device - redirect to Play Store
+      window.location.href = "https://play.google.com/store/apps/details?id=your.app.id";
+    } else if (/iPad|iPhone|iPod/.test(userAgent)) {
+      // iOS device - redirect to App Store
+      window.location.href = "https://apps.apple.com/app/your-app-id";
+    } else {
+      // Default to Play Store for other devices
+      window.location.href = "https://play.google.com/store/apps/details?id=your.app.id";
+    }
+  };
+
   return (
     <footer className="py-12 relative overflow-hidden bg-black/50 backdrop-blur-lg border-t border-white/10">
       <div className="absolute inset-0 floating-dots opacity-30"></div>
@@ -18,12 +41,66 @@ const Footer = () => {
             Join over 1000+ businesses already optimizing their operations with Saakh.
           </p>
           
-          <a 
-            href="#download" 
-            className="mt-8 px-8 py-3 rounded-full bg-saakh-blue hover:bg-saakh-blue-light transition text-white font-medium inline-flex items-center"
-          >
-            Get Started
-          </a>
+          <div className="flex flex-col sm:flex-row gap-4 mt-8">
+            <HoverCard openDelay={0} closeDelay={200}>
+              <HoverCardTrigger asChild>
+                <Button
+                  className="px-5 py-2 bg-saakh-blue hover:bg-saakh-blue-light text-white font-medium rounded-xl text-base h-auto"
+                  onClick={handleDownloadClick}
+                >
+                  Download Now
+                </Button>
+              </HoverCardTrigger>
+              <HoverCardContent className="w-auto p-0">
+                <div className="p-4 bg-white rounded-lg">
+                  <p className="text-black font-medium mb-2 text-center">Scan to download</p>
+                  <div className="w-48 h-48 bg-white p-2 rounded-lg flex items-center justify-center">
+                    {/* Replace with your actual QR code image */}
+                    <div className="w-full h-full border-2 border-dashed border-gray-300 rounded flex items-center justify-center">
+                      <p className="text-xs text-gray-500 text-center">Your QR Code Here</p>
+                    </div>
+                  </div>
+                </div>
+              </HoverCardContent>
+            </HoverCard>
+            
+            {/* Book a Demo Button */}
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button 
+                  variant="outline" 
+                  className="px-5 py-2 border-saakh-blue hover:bg-saakh-blue/10 text-white font-medium rounded-xl text-base h-auto"
+                >
+                  Book a Demo
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="center">
+                <div className="p-4 bg-white rounded-lg">
+                  <p className="text-black font-medium mb-2 text-center">Select a date</p>
+                  <Calendar
+                    mode="single"
+                    selected={date}
+                    onSelect={setDate}
+                    className="rounded-md border"
+                  />
+                  {date && (
+                    <div className="mt-4">
+                      <p className="text-center text-sm text-gray-500">Available time slots for {date.toLocaleDateString()}</p>
+                      <ScrollArea className="h-24 mt-2">
+                        <div className="space-y-2">
+                          <Button variant="outline" className="w-full text-sm">10:00 AM</Button>
+                          <Button variant="outline" className="w-full text-sm">11:30 AM</Button>
+                          <Button variant="outline" className="w-full text-sm">1:00 PM</Button>
+                          <Button variant="outline" className="w-full text-sm">2:30 PM</Button>
+                          <Button variant="outline" className="w-full text-sm">4:00 PM</Button>
+                        </div>
+                      </ScrollArea>
+                    </div>
+                  )}
+                </div>
+              </PopoverContent>
+            </Popover>
+          </div>
         </div>
         
         <div className="flex flex-wrap justify-center gap-8 mt-8 mb-12">
@@ -66,8 +143,9 @@ const Footer = () => {
               </a>
             </div>
             
-            <div className="mt-4 md:mt-0">
-              <a href="#" className="text-white/60 hover:text-white transition-colors">Privacy Policy</a>
+            <div className="mt-4 md:mt-0 flex space-x-6">
+              <a href="/policy" className="text-white/60 hover:text-white transition-colors">Privacy Policy</a>
+              <a href="/terms" className="text-white/60 hover:text-white transition-colors">Terms & Conditions</a>
             </div>
           </div>
         </div>
