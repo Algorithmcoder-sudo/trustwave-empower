@@ -18,21 +18,49 @@ const LandingSection = () => {
   const [loaded, setLoaded] = React.useState(false);
   const isMobile = useIsMobile();
   
-  // Source data for marquee
+  // Source data for marquee with the specific sources you provided
   const sources = [
-    "GST", "UDYAM", "PAN", "TAN", "IEC", "EPF", 
-    "MCA", "RBI", "SEBI", "BSE", "NSE", "LEI", "IBBI",
-    "BIFR", "SFIO", "DIN", "TDS", "Website", "Google",
-    "IndiaMART", "JustDial", "TradeIndia", "LinkedIn", "Facebook"
+    { id: 1, name: 'GST' },
+    { id: 2, name: 'UDYAM' },
+    { id: 3, name: 'PAN' },
+    { id: 4, name: 'TAN' },
+    { id: 5, name: 'SEBI' },
+    { id: 6, name: 'SFIO' },
+    { id: 7, name: 'MCA' },
+    { id: 8, name: 'IBBI' },
+    { id: 9, name: 'DIN' },
+    { id: 10, name: 'IEC' },
+    { id: 11, name: 'EPF' },
+    { id: 12, name: 'LEI' },
+    { id: 13, name: 'BIFR' },
+    { id: 14, name: 'TDS' },
+    { id: 15, image: "/sources/google.png", name: 'Google' },
+    { id: 16, image: "/sources/facebook.png", name: 'Facebook' },
+    { id: 17, image: "/sources/indiamart.png", name: 'IndiaMART' },
+    { id: 18, image: '/sources/justdial.png', name: 'JustDial' },
   ];
   
-  // Create source items for marquee
-  const sourceItems = sources.map((source, index) => (
+  // Create USP card items for the marquee
+  const uspItems = sources.map((source) => (
     <div 
-      key={index} 
+      key={source.id} 
+      className="flex items-center justify-center glass-morphism p-6 h-24 w-48 rounded-lg border border-white/10 transition-all duration-300 hover:border-saakh-blue/50 hover:bg-white/10 mx-4"
+    >
+      {source.image ? (
+        <img src={source.image} alt={source.name} className="h-8" />
+      ) : (
+        <span className="text-lg font-medium text-white">{source.name}</span>
+      )}
+    </div>
+  ));
+  
+  // Create simple text items for background marquee
+  const sourceItems = sources.map((source) => (
+    <div 
+      key={source.id} 
       className="source-item opacity-5 text-white whitespace-nowrap"
     >
-      {source}
+      {source.name}
     </div>
   ));
   
@@ -115,11 +143,11 @@ const LandingSection = () => {
       {/* Background gradient */}
       <div className="absolute top-0 left-0 right-0 h-96 bg-gradient-radial from-saakh-blue-dark/30 to-transparent"></div>
       
-      {/* Background marquee with low opacity */}
+      {/* Background USP marquee with low opacity */}
       <div className="absolute inset-0 z-0 opacity-10 pointer-events-none overflow-hidden">
         <div className="absolute top-[10%] w-full">
           <MarqueeSection 
-            items={sourceItems} 
+            items={uspItems} 
             direction="left" 
             speed="slow" 
             pauseOnHover={false}
@@ -128,7 +156,7 @@ const LandingSection = () => {
         
         <div className="absolute top-[30%] w-full">
           <MarqueeSection 
-            items={sourceItems} 
+            items={uspItems} 
             direction="right" 
             speed="slow" 
             pauseOnHover={false}
@@ -137,7 +165,7 @@ const LandingSection = () => {
         
         <div className="absolute top-[50%] w-full">
           <MarqueeSection 
-            items={sourceItems} 
+            items={uspItems} 
             direction="left" 
             speed="normal" 
             pauseOnHover={false}
@@ -146,7 +174,7 @@ const LandingSection = () => {
         
         <div className="absolute top-[70%] w-full">
           <MarqueeSection 
-            items={sourceItems} 
+            items={uspItems} 
             direction="right" 
             speed="slow" 
             pauseOnHover={false}
